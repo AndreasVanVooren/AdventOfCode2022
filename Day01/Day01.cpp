@@ -8,7 +8,7 @@
 #include <functional>
 #include <algorithm>
 
-std::string GetResultForStream(std::ifstream& fileStream)
+std::string Day01::GetResultForStream(const std::filesystem::path& path)
 {
 	std::vector<int> valList{};
 	int currentMax = std::numeric_limits<int>::lowest();
@@ -35,18 +35,18 @@ std::string GetResultForStream(std::ifstream& fileStream)
 
 	};
 
-	std::string line;
-	while (std::getline(fileStream, line))
-	{
-		if (line.empty())
+	ForEachLineInFile(path, [&commitEntry, &addEntry](const std::string& line)
 		{
-			commitEntry();
+			if (line.empty())
+			{
+				commitEntry();
+			}
+			else
+			{
+				addEntry(line);
+			}
 		}
-		else
-		{
-			addEntry(line);
-		}
-	}
+	);
 	// Ensure the final entry is committed.
 	commitEntry();
 
@@ -67,9 +67,12 @@ std::string GetResultForStream(std::ifstream& fileStream)
 
 	return resultStr.str();
 }
+std::string Day01::GetIdStr()
+{
+	return "Day01";
+}
 std::string Day01::GetResultStr()
 {
-	std::filesystem::path filePath = std::filesystem::current_path() / "Day01" / "input";
-	std::ifstream fileStream{ filePath };
-	return GetResultForStream(fileStream);
+	std::cout << GetResultForStream(GetTestInputPath()) << "\n";
+	return GetResultForStream(GetInputPath());
 };

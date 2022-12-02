@@ -34,6 +34,7 @@ int main()
 			headerStream << "{\n";
 			headerStream << "public:\n";
 			headerStream << "\tvirtual std::string GetResultStr();\n";
+			headerStream << "\tvirtual std::string GetIdStr();\n";
 			headerStream << "};\n";
 		}
 
@@ -45,6 +46,10 @@ int main()
 			cppStream << "std::string " << pathStream.str() << "::GetResultStr()\n";
 			cppStream << "{\n";
 			cppStream << "\treturn \"---"<< pathStream.str() <<" is not yet implemented! ---\";\n";
+			cppStream << "};\n";
+			cppStream << "std::string " << pathStream.str() << "::GetIdStr()\n";
+			cppStream << "{\n";
+			cppStream << "\treturn \"" << pathStream.str() << "\";\n";
 			cppStream << "};\n";
 		}
 	}

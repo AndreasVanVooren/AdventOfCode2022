@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AdventOfCode2022.cpp" />
+    <ClCompile Include="BaseDay.cpp" />
     <ClCompile Include="Day01\Day01.cpp" />
     <ClCompile Include="Day02\Day02.cpp" />
     <ClCompile Include="Day03\Day03.cpp" />

@@ -3,3 +3,7 @@ std::string Day08::GetResultStr()
 {
 	return "---Day08 is not yet implemented! ---";
 };
+std::string Day08::GetIdStr()
+{
+	return "Day08";
+};

@@ -4,4 +4,5 @@ class Day14 : public BaseDay
 {
 public:
 	virtual std::string GetResultStr();
+	virtual std::string GetIdStr();
 };
