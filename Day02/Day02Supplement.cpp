@@ -1,24 +1,52 @@
-#include "Day02.h"
+#include "Day02Supplement.h"
 
 #include <vector>
 #include <map>
 #include <utility>
 
-namespace Day02Internal
+namespace Day02SupplementInternal
 {
 	enum class RPSValue : int
 	{
-		Rock = 1,
-		Paper = 2,
-		Scissors = 3,
+		Dynamite, Tornado, Quicksand, Pit, Chain, Gun, Law, Whip, Sword, Rock,
+		Death, Wall, Sun, Camera, Fire, Chainsaw, School, Scissors, Poison, Cage,
+		Axe, Peace, Computer, Castle, Snake, Blood, Porcupine, Vulture, Monkey, King,
+		Queen, Prince, Princess, Police, Woman, Baby, Man, Home, Train, Car,
+		Noise, Bicycle, Tree, Turnip, Duck, Wolf, Cat, Bird, Fish, Spider,
+		Cockroach, Brain, Community, Cross, Money, Vampire, Sponge, Church, Butter, Book,
+		Paper, Cloud, Airplane, Moon, Grass, Film, Toilet, Air, Planet, Guitar,
+		Bowl, Cup, Beer, Rain, Water, TV, Rainbow, UFO, Alien, Prayer,
+		Mountain, Satan, Dragon, Diamond, Platinum, Gold, Devil, Fence, VideoGame, Math,
+		Robot, Heart, Electricity, Lightning, Medusa, Power, Laser, Nuke, Sky, Tank,
+		Helicopter,
+
+		MAX
 	};
+
+	constexpr int ScoreForValue(RPSValue val)
+	{
+		// Hardcoded for parity
+		switch (val)
+		{
+		case RPSValue::Rock: return 1;
+		case RPSValue::Paper: return 2;
+		case RPSValue::Scissors: return 3;
+		}
+		//// Otherwise use the following value:
+		//return static_cast<int>(val) + 1;
+	}
 
 	enum class RPSResult : int
 	{
-		Loss = 0,
-		Draw = 3,
-		Win = 6,
+		Loss,
+		Draw,
+		Win,
 	};
+
+	constexpr int ScoreForResult(RPSResult val)
+	{
+		return static_cast<int>(val) * 3;
+	}
 
 	static const std::map<std::string, RPSValue> OriginalValueMapping
 	{
@@ -37,51 +65,43 @@ namespace Day02Internal
 		, {"Z", RPSResult::Win}
 	};
 
-	RPSResult GetResultForRHS(RPSValue lhs, RPSValue rhs)
+	constexpr RPSResult GetResultForRHS(RPSValue lhs, RPSValue rhs)
 	{
-		if (lhs == rhs)
+		constexpr int max = static_cast<int>(RPSValue::MAX);
+		constexpr int halfMax = max / 2;
+		int intermediate = static_cast<int>(rhs) - static_cast<int>(lhs);
+		while (intermediate > halfMax)
+		{
+			intermediate -= max;
+		}
+		while (intermediate < -halfMax)
+		{
+			intermediate += max;
+		}
+
+		if (intermediate > 0)
+		{
+			return RPSResult::Loss;
+		}
+		else if (intermediate < 0)
+		{
+			return RPSResult::Win;
+		}
+		else
 		{
 			return RPSResult::Draw;
 		}
-		switch (lhs)
-		{
-		case RPSValue::Rock:
-			switch (rhs)
-			{
-			case RPSValue::Paper:
-				return RPSResult::Win;
-				break;
-			case RPSValue::Scissors:
-				return RPSResult::Loss;
-				break;
-			}
-			break;
-		case RPSValue::Paper:
-			switch (rhs)
-			{
-			case RPSValue::Rock:
-				return RPSResult::Loss;
-				break;
-			case RPSValue::Scissors:
-				return RPSResult::Win;
-				break;
-			}
-			break;
-		case RPSValue::Scissors:
-			switch (rhs)
-			{
-			case RPSValue::Rock:
-				return RPSResult::Win;
-				break;
-			case RPSValue::Paper:
-				return RPSResult::Loss;
-				break;
-			}
-			break;
-		}
-		return RPSResult::Draw;
 	}
 
+	static_assert(GetResultForRHS(RPSValue::Rock, RPSValue::Scissors) == RPSResult::Loss);
+	static_assert(GetResultForRHS(RPSValue::Scissors, RPSValue::Paper) == RPSResult::Loss);
+	static_assert(GetResultForRHS(RPSValue::Paper, RPSValue::Rock) == RPSResult::Loss);
+
+	static_assert(GetResultForRHS(RPSValue::Rock, RPSValue::Paper) == RPSResult::Win);
+	static_assert(GetResultForRHS(RPSValue::Scissors, RPSValue::Rock) == RPSResult::Win);
+	static_assert(GetResultForRHS(RPSValue::Paper, RPSValue::Scissors) == RPSResult::Win);
+
+	// Still hardcoded, as the result is not really deterministic here.
 	RPSValue GetValueForResult(RPSValue lhs, RPSResult rhs)
 	{
 		switch (rhs)
@@ -117,9 +137,9 @@ namespace Day02Internal
 	}
 }
 
-std::string Day02::GetResultStr()
+std::string Day02Supplement::GetResultStr()
 {
-	using namespace Day02Internal;
+	using namespace Day02SupplementInternal;
 	std::stringstream resultStream{};
 	std::vector<int> scoresPerTurn{};
 	int scoreTotal{};
@@ -161,7 +181,7 @@ std::string Day02::GetResultStr()
 		if (lhsIter != OriginalValueMapping.end() && rhsIter != OriginalValueMapping.end())
 		{
 			const RPSResult result = GetResultForRHS(lhsIter->second, rhsIter->second);
-			const int scoreTurn = static_cast<int>(rhsIter->second) + static_cast<int>(result);
+			const int scoreTurn = ScoreForValue(rhsIter->second) + ScoreForResult(result);
 			scoreTotal += scoreTurn;
 			scoresPerTurn.push_back(scoreTurn);
 		}
@@ -175,7 +195,7 @@ std::string Day02::GetResultStr()
 		if (lhsIter != OriginalValueMapping.end() && rhsIter != ResultMapping.end())
 		{
 			const RPSValue counterValue = GetValueForResult(lhsIter->second, rhsIter->second);
-			const int scoreTurn = static_cast<int>(rhsIter->second) + static_cast<int>(counterValue);
+			const int scoreTurn = ScoreForResult(rhsIter->second) + ScoreForValue(counterValue);
 			scoreTotal += scoreTurn;
 			scoresPerTurn.push_back(scoreTurn);
 		}
@@ -213,7 +233,7 @@ std::string Day02::GetResultStr()
 	return resultStream.str();
 };
 
-std::string Day02::GetIdStr()
+std::string Day02Supplement::GetIdStr()
 {
 	return "Day02";
 }

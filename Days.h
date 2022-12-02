@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Day01/Day01.h"
 #include "Day02/Day02.h"
+#include "Day02/Day02Supplement.h"
 #include "Day03/Day03.h"
 #include "Day04/Day04.h"
 #include "Day05/Day05.h"
@@ -31,6 +32,7 @@ static void IterateDays()
 {
 	std::cout << Day01{}.GetResultStr() << "\n";
 	std::cout << Day02{}.GetResultStr() << "\n";
+	std::cout << Day02Supplement{}.GetResultStr() << "\n";
 	std::cout << Day03{}.GetResultStr() << "\n";
 	std::cout << Day04{}.GetResultStr() << "\n";
 	std::cout << Day05{}.GetResultStr() << "\n";
