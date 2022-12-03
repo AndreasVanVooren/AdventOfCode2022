@@ -181,5 +181,8 @@
     <ClInclude Include="Day02\Day02Supplement.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

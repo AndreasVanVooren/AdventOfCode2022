@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include "../Utils.h"
 
 namespace Day02Internal
 {
@@ -142,19 +143,9 @@ std::string Day02::GetResultStr()
 		}
 	};
 
-	const auto splitLine = [](const std::string& line, const std::string substr) -> std::pair<std::string, std::string>
+	const auto lineLambdaAssumingXYZIsValue = [&scoreTotal, &scoresPerTurn](const std::string& line)
 	{
-		const auto offset = line.find(substr);
-		if (offset != line.npos)
-		{
-			return { line.substr(0, offset), line.substr(offset + substr.length()) };
-		}
-		return std::pair<std::string, std::string>{line, {}};
-	};
-
-	const auto lineLambdaAssumingXYZIsValue = [&scoreTotal, &scoresPerTurn, &splitLine](const std::string& line)
-	{
-		const auto [lhs, rhs] = splitLine(line, " ");
+		const auto [lhs, rhs] = SplitString(line, " ");
 		// TODO: Ensure the line is valid, for now assume it is.
 		const auto lhsIter = OriginalValueMapping.find(lhs);
 		const auto rhsIter = OriginalValueMapping.find(rhs);
@@ -166,9 +157,9 @@ std::string Day02::GetResultStr()
 			scoresPerTurn.push_back(scoreTurn);
 		}
 	};
-	const auto lineLambdaAssumingXYZIsResult = [&scoreTotal, &scoresPerTurn, &splitLine](const std::string& line)
+	const auto lineLambdaAssumingXYZIsResult = [&scoreTotal, &scoresPerTurn](const std::string& line)
 	{
-		const auto [lhs, rhs] = splitLine(line, " ");
+		const auto [lhs, rhs] = SplitString(line, " ");
 		// TODO: Ensure the line is valid, for now assume it is.
 		const auto lhsIter = OriginalValueMapping.find(lhs);
 		const auto rhsIter = ResultMapping.find(rhs);
