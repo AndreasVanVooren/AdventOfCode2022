@@ -60,19 +60,19 @@ std::string Day07::GetResultStr()
 		{
 			if (args == "/")
 			{
-				std::cout << "Navigating to root\n";
+				//std::cout << "Navigating to root\n";
 				currentDir = &root;
 			}
 			else if (args == "..")
 			{
 				currentDir = currentDir->parent;
-				std::cout << "Navigating to parent dir\n";
+				//std::cout << "Navigating to parent dir\n";
 			}
 			else
 			{
 				if (currentDir->subDirs.contains(args))
 				{
-					std::cout << "Navigating to " << args << "\n";
+					//std::cout << "Navigating to " << args << "\n";
 					currentDir = &currentDir->subDirs[args];
 				}
 			}
@@ -90,7 +90,7 @@ std::string Day07::GetResultStr()
 			const std::string substr = line.substr(4);
 			if (!currentDir->subDirs.contains(substr))
 			{
-				std::cout << "Found new dir " << substr << "\n";
+				//std::cout << "Found new dir " << substr << "\n";
 				currentDir->subDirs.emplace(substr, FakeDir{currentDir});
 			}
 		}
@@ -101,7 +101,7 @@ std::string Day07::GetResultStr()
 			{
 				int size = std::stoi(sizeStr);
 				currentDir->files.emplace(fileName, size);
-				std::cout << "Found new file " << fileName << " with size " << size << "\n";
+				//std::cout << "Found new file " << fileName << " with size " << size << "\n";
 				auto* fileDir = currentDir;
 				while (fileDir != nullptr)
 				{
@@ -115,7 +115,7 @@ std::string Day07::GetResultStr()
 	const auto processTree = [&](const std::string& debug)
 	{
 		const int size = DirSizeAccumulator{}(root);
-		std::cout << "Total size of smaller files for [" << debug << "] = " << size << "\n";
+		//std::cout << "Total size of smaller files for [" << debug << "] = " << size << "\n";
 		resultStream << "Total size of smaller files for [" << debug << "] = " << size << "\n";
 		
 		constexpr int maxSize = 70'000'000;
@@ -126,7 +126,7 @@ std::string Day07::GetResultStr()
 		if (requiredSize > 0)
 		{
 			int result = SmallestRemovableDirFinder{ requiredSize }(root);
-			std::cout << "Smallest removable size for [" << debug << "] = " << result << "\n";
+			//std::cout << "Smallest removable size for [" << debug << "] = " << result << "\n";
 			resultStream << "Smallest removable size for [" << debug << "] = " << result << "\n";
 		}
 	};

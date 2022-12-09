@@ -35,18 +35,18 @@ std::string Day04::GetResultStr()
 
 		if ((firstLId >= firstRId && lastLId <= lastRId) || firstRId >= firstLId && lastRId <= lastLId)
 		{
-			std::cout << std::format("Full Overlap detected between [{}] and [{}]\n", pairL, pairR);
+			//std::cout << std::format("Full Overlap detected between [{}] and [{}]\n", pairL, pairR);
 			++overlapFullyTotal;
 			++overlapTotal;
 		}
 		else if ((firstLId >= firstRId && firstLId <= lastRId) || (lastLId >= firstRId && lastLId <= lastRId))
 		{
-			std::cout << std::format("Partial Overlap detected between [{}] and [{}]\n", pairL, pairR);
+			//std::cout << std::format("Partial Overlap detected between [{}] and [{}]\n", pairL, pairR);
 			++overlapTotal;
 		}
 		else
 		{
-			std::cout << std::format("No overlap between [{}] and [{}]\n", pairL, pairR);
+			//std::cout << std::format("No overlap between [{}] and [{}]\n", pairL, pairR);
 		}
 	};
 
