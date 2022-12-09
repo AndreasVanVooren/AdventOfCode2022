@@ -3,7 +3,7 @@
 #include <fstream>
 #include <chrono>
 #include <iostream>
-#include "Utils.h"
+#include "ScopeProfiler.h"
 
 std::filesystem::path BaseDay::GetWorkingFolder()
 {

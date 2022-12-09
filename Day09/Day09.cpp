@@ -8,6 +8,7 @@
 #include <regex>
 #include <ranges>
 #include "../Utils.h"
+#include "../ScopeProfiler.h"
 
 using coord = std::pair<int, int>;
 
