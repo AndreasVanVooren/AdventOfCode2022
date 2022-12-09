@@ -10,7 +10,7 @@
 
 int main()
 {
-    std::cout << "Currently in " << std::filesystem::current_path() << "\n";
+    std::cout << "Currently in " << std::filesystem::current_path() << "\n\n";
 
 	// Check if files don't exist, otherwise create them.
 	for (int i = 0; i < 25; i++)
@@ -45,7 +45,7 @@ int main()
 			cppStream << "#include \"" << pathStream.str() << ".h\"\n";
 			cppStream << "std::string " << pathStream.str() << "::GetResultStr()\n";
 			cppStream << "{\n";
-			cppStream << "\treturn \"---"<< pathStream.str() <<" is not yet implemented! ---\";\n";
+			cppStream << "\treturn \"---"<< pathStream.str() <<" is not yet implemented! ---\\n\";\n";
 			cppStream << "};\n";
 			cppStream << "std::string " << pathStream.str() << "::GetIdStr()\n";
 			cppStream << "{\n";

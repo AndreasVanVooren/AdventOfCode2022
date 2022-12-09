@@ -8,6 +8,7 @@
 #include <regex>
 #include <ranges>
 #include "../Utils.h"
+#include "../ScopeProfiler.h"
 
 std::string Day08::GetResultStr()
 {
@@ -34,8 +35,13 @@ std::string Day08::GetResultStr()
 		treeGrid.push_back(std::move(temp));
 	};
 
-	const auto getTreeStats = [&](const size_t rowIndex, const size_t colIndex)
+	const auto getStatsForTreeAt = [&](const size_t rowIndex, const size_t colIndex)
 	{
+		if (rowIndex == 0 || rowIndex == (treeGrid.size() - 1) || colIndex == 0 || colIndex == (treeGrid[rowIndex].size() - 1))
+		{
+			return std::make_pair(true, ptrdiff_t{ 0 });
+		}
+		//ScopeProfiler prof{ "getStatsForTreeAt" };
 		const auto getTreeStatIter = [](const auto& begin, const auto& end, const auto& pred)
 		{
 			const auto encounter = std::find_if(begin, end, pred);
@@ -70,8 +76,10 @@ std::string Day08::GetResultStr()
 		return std::make_pair( bIsVisible, scenicScore );
 	};
 
-	const auto getNumVisibleTrees = [&]
+	const auto getAccumulatedTreeStats = [&]
 	{
+		ScopeProfiler prof{ "getAccumulatedTreeStats" };
+
 		size_t num = 0;
 		ptrdiff_t highestScenicScore = 0;
 		size_t highestRow = std::numeric_limits<size_t>::max();
@@ -80,7 +88,7 @@ std::string Day08::GetResultStr()
 		{
 			for (size_t col = 0; col < treeGrid[row].size(); ++col)
 			{
-				const auto [visible, score] = getTreeStats(row, col);
+				const auto [visible, score] = getStatsForTreeAt(row, col);
 				if (score > highestScenicScore)
 				{
 					highestScenicScore = score;
@@ -99,7 +107,7 @@ std::string Day08::GetResultStr()
 	reset();
 	ForEachLineInTestInputFile(fetchTreeRow);
 	{
-		const auto [numVisible, highestScenic, row, col] = getNumVisibleTrees();
+		const auto [numVisible, highestScenic, row, col] = getAccumulatedTreeStats();
 		resultStream << "Test input returned " << numVisible << " trees visible, with a highest scenic score of " << highestScenic << " at [" << col << "," << row << "]\n";
 		if (numVisible != 21) __debugbreak();
 		if (highestScenic != 8) __debugbreak();
@@ -110,7 +118,7 @@ std::string Day08::GetResultStr()
 	reset();
 	ForEachLineInInputFile(fetchTreeRow);
 	{
-		const auto [numVisible, highestScenic, row, col] = getNumVisibleTrees();
+		const auto [numVisible, highestScenic, row, col] = getAccumulatedTreeStats();
 		resultStream << "Input returned " << numVisible << " trees visible, with a highest scenic score of " << highestScenic << " at [" << col << "," << row << "]\n";
 	}
 

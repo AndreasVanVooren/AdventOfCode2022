@@ -27,33 +27,138 @@
 #include "Day23/Day23.h"
 #include "Day24/Day24.h"
 #include "Day25/Day25.h"
+#include "ScopeProfiler.h"
 
 static void IterateDays()
 {
-	std::cout << Day01{}.GetResultStr() << "\n";
-	std::cout << Day02{}.GetResultStr() << "\n";
-	std::cout << Day02Supplement{}.GetResultStr() << "\n";
-	std::cout << Day03{}.GetResultStr() << "\n";
-	std::cout << Day04{}.GetResultStr() << "\n";
-	std::cout << Day05{}.GetResultStr() << "\n";
-	std::cout << Day06{}.GetResultStr() << "\n";
-	std::cout << Day07{}.GetResultStr() << "\n";
-	std::cout << Day08{}.GetResultStr() << "\n";
-	std::cout << Day09{}.GetResultStr() << "\n";
-	std::cout << Day10{}.GetResultStr() << "\n";
-	std::cout << Day11{}.GetResultStr() << "\n";
-	std::cout << Day12{}.GetResultStr() << "\n";
-	std::cout << Day13{}.GetResultStr() << "\n";
-	std::cout << Day14{}.GetResultStr() << "\n";
-	std::cout << Day15{}.GetResultStr() << "\n";
-	std::cout << Day16{}.GetResultStr() << "\n";
-	std::cout << Day17{}.GetResultStr() << "\n";
-	std::cout << Day18{}.GetResultStr() << "\n";
-	std::cout << Day19{}.GetResultStr() << "\n";
-	std::cout << Day20{}.GetResultStr() << "\n";
-	std::cout << Day21{}.GetResultStr() << "\n";
-	std::cout << Day22{}.GetResultStr() << "\n";
-	std::cout << Day23{}.GetResultStr() << "\n";
-	std::cout << Day24{}.GetResultStr() << "\n";
-	std::cout << Day25{}.GetResultStr() << "\n";
+	{
+		ScopeProfiler prof{ "Day01" };
+		std::cout << Day01{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day02" };
+		std::cout << Day02{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day02Supplement" };
+		std::cout << Day02Supplement{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day03" };
+		std::cout << Day03{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day04" };
+		std::cout << Day04{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day05" };
+		std::cout << Day05{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day06" };
+		std::cout << Day06{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day07" };
+		std::cout << Day07{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day08" };
+		std::cout << Day08{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day09" };
+		std::cout << Day09{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day10" };
+		std::cout << Day10{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day11" };
+		std::cout << Day11{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day12" };
+		std::cout << Day12{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day13" };
+		std::cout << Day13{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day14" };
+		std::cout << Day14{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day15" };
+		std::cout << Day15{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day16" };
+		std::cout << Day16{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day17" };
+		std::cout << Day17{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day18" };
+		std::cout << Day18{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day19" };
+		std::cout << Day19{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day20" };
+		std::cout << Day20{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day21" };
+		std::cout << Day21{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day22" };
+		std::cout << Day22{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day23" };
+		std::cout << Day23{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day24" };
+		std::cout << Day24{}.GetResultStr();
+	}
+	std::cout << "\n";
+	{
+		ScopeProfiler prof{ "Day25" };
+		std::cout << Day25{}.GetResultStr();
+	}
+	std::cout << "\n";
 }

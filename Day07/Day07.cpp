@@ -8,6 +8,7 @@
 #include <regex>
 #include <ranges>
 #include "../Utils.h"
+#include "../ScopeProfiler.h"
 
 struct FakeDir
 {
@@ -114,20 +115,26 @@ std::string Day07::GetResultStr()
 	
 	const auto processTree = [&](const std::string& debug)
 	{
-		const int size = DirSizeAccumulator{}(root);
-		//std::cout << "Total size of smaller files for [" << debug << "] = " << size << "\n";
-		resultStream << "Total size of smaller files for [" << debug << "] = " << size << "\n";
-		
-		constexpr int maxSize = 70'000'000;
-		constexpr int updateSize = 30'000'000;
-		const int diskSize = root.accumulatedSize;
-		const int leftSize = maxSize - diskSize;
-		const int requiredSize = updateSize - leftSize;
-		if (requiredSize > 0)
 		{
-			int result = SmallestRemovableDirFinder{ requiredSize }(root);
-			//std::cout << "Smallest removable size for [" << debug << "] = " << result << "\n";
-			resultStream << "Smallest removable size for [" << debug << "] = " << result << "\n";
+			ScopeProfiler prof{ "DirSizeAccumulator" };
+
+			const int size = DirSizeAccumulator{}(root);
+			//std::cout << "Total size of smaller files for [" << debug << "] = " << size << "\n";
+			resultStream << "Total size of smaller files for [" << debug << "] = " << size << "\n";
+		}
+		{
+			ScopeProfiler prof{ "SmallestRemovableDirFinder" };
+			constexpr int maxSize = 70'000'000;
+			constexpr int updateSize = 30'000'000;
+			const int diskSize = root.accumulatedSize;
+			const int leftSize = maxSize - diskSize;
+			const int requiredSize = updateSize - leftSize;
+			if (requiredSize > 0)
+			{
+				int result = SmallestRemovableDirFinder{ requiredSize }(root);
+				//std::cout << "Smallest removable size for [" << debug << "] = " << result << "\n";
+				resultStream << "Smallest removable size for [" << debug << "] = " << result << "\n";
+			}
 		}
 	};
 

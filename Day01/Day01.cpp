@@ -73,6 +73,6 @@ std::string Day01::GetIdStr()
 }
 std::string Day01::GetResultStr()
 {
-	std::cout << GetResultForStream(GetTestInputPath()) << "\n";
+	std::cout << GetResultForStream(GetTestInputPath());
 	return GetResultForStream(GetInputPath());
 };
