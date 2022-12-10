@@ -7,7 +7,7 @@
 class ScopeProfiler
 {
 public:
-	ScopeProfiler(const std::string& name)
+	ScopeProfiler(const std::wstring& name)
 		: _start{ std::chrono::high_resolution_clock::now() }
 		, _name{ name }
 	{}
@@ -15,10 +15,10 @@ public:
 	~ScopeProfiler()
 	{
 		auto end = std::chrono::high_resolution_clock::now();
-		const auto oldLocale = std::cout.getloc();
-		std::cout.imbue(std::locale(""));
-		std::cout << "Took " << (end - _start) << " to execute [" << _name << "]\n";
-		std::cout.imbue(oldLocale);
+		//const auto oldLocale = std::wcout.getloc();
+		//std::wcout.imbue(std::locale("en_US.utf8"));
+		std::wcout << L"Took " << (end - _start) << L" to execute [" << _name << L"]\n";
+		//std::wcout.imbue(oldLocale);
 	}
 	ScopeProfiler(ScopeProfiler&&) = default;
 	ScopeProfiler& operator=(ScopeProfiler&&) = default;
@@ -27,5 +27,5 @@ private:
 	ScopeProfiler(const ScopeProfiler&) = delete;
 	ScopeProfiler& operator=(const ScopeProfiler&) = delete;
 	std::chrono::high_resolution_clock::time_point _start;
-	std::string _name;
+	std::wstring _name;
 };

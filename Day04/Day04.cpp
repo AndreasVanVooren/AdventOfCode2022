@@ -7,9 +7,9 @@
 #include <set>
 #include "../Utils.h"
 
-std::string Day04::GetResultStr()
+std::wstring Day04::GetResultStr()
 {
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 	int overlapTotal{};
 	int overlapFullyTotal{};
 	const auto reset = [&]
@@ -17,16 +17,16 @@ std::string Day04::GetResultStr()
 		overlapTotal = 0;
 		overlapFullyTotal = 0;
 	};
-	const auto output = [&](const std::string& debug)
+	const auto output = [&](const std::wstring& debug)
 	{
-		resultStream << std::format("[{}] Found {} overlapping groups, where {} fully overlap\n", debug, overlapTotal, overlapFullyTotal);
+		resultStream << std::format(L"[{}] Found {} overlapping groups, where {} fully overlap\n", debug, overlapTotal, overlapFullyTotal);
 	};
-	const auto processLambda = [&](const std::string& line)
+	const auto processLambda = [&](const std::wstring& line)
 	{
 		if (line.empty()) return;
-		const auto [pairL, pairR] = SplitString(line, ",");
-		const auto [firstL, lastL] = SplitString(pairL, "-");
-		const auto [firstR, lastR] = SplitString(pairR, "-");
+		const auto [pairL, pairR] = SplitString(line, L",");
+		const auto [firstL, lastL] = SplitString(pairL, L"-");
+		const auto [firstR, lastR] = SplitString(pairR, L"-");
 		const int 
 			  firstLId = std::stoi(firstL)
 			, lastLId = std::stoi(lastL)
@@ -35,36 +35,36 @@ std::string Day04::GetResultStr()
 
 		if ((firstLId >= firstRId && lastLId <= lastRId) || firstRId >= firstLId && lastRId <= lastLId)
 		{
-			//std::cout << std::format("Full Overlap detected between [{}] and [{}]\n", pairL, pairR);
+			//std::wcout << std::format(L"Full Overlap detected between [{}] and [{}]\n", pairL, pairR);
 			++overlapFullyTotal;
 			++overlapTotal;
 		}
 		else if ((firstLId >= firstRId && firstLId <= lastRId) || (lastLId >= firstRId && lastLId <= lastRId))
 		{
-			//std::cout << std::format("Partial Overlap detected between [{}] and [{}]\n", pairL, pairR);
+			//std::wcout << std::format(L"Partial Overlap detected between [{}] and [{}]\n", pairL, pairR);
 			++overlapTotal;
 		}
 		else
 		{
-			//std::cout << std::format("No overlap between [{}] and [{}]\n", pairL, pairR);
+			//std::wcout << std::format(L"No overlap between [{}] and [{}]\n", pairL, pairR);
 		}
 	};
 
 	reset();
 	ForEachLineInTestInputFile(processLambda);
-	output("Test");
+	output(L"Test");
 
 	if (overlapTotal != 4) __debugbreak();
 	if (overlapFullyTotal != 2) __debugbreak();
 
 	reset();
 	ForEachLineInInputFile(processLambda);
-	output("Final");
+	output(L"Final");
 
 	return resultStream.str();
 };
 
-std::string Day04::GetIdStr()
+std::wstring Day04::GetIdStr()
 {
-	return "Day04";
+	return L"Day04";
 };

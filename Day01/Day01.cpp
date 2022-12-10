@@ -8,7 +8,7 @@
 #include <functional>
 #include <algorithm>
 
-std::string Day01::GetResultForStream(const std::filesystem::path& path)
+std::wstring Day01::GetResultForStream(const std::filesystem::path& path)
 {
 	std::vector<int> valList{};
 	int currentMax = std::numeric_limits<int>::lowest();
@@ -16,14 +16,14 @@ std::string Day01::GetResultForStream(const std::filesystem::path& path)
 	int currentVal = 0;
 	int currentGroup = 0;
 
-	const auto addEntry = [&currentVal](const std::string& strVal)
+	const auto addEntry = [&currentVal](const std::wstring& strVal)
 	{
 		currentVal += std::stoi(strVal);
 	};
 
 	const auto commitEntry = [&valList, &currentVal, &currentMax, &currentMaxGroup, &currentGroup]
 	{
-		//std::cout << "Committing group " << currentGroup + 1 << " with value " << currentVal << "\n";
+		//std::wcout << "Committing group " << currentGroup + 1 << " with value " << currentVal << "\n";
 		if (currentMax < currentVal)
 		{
 			currentMax = currentVal;
@@ -35,7 +35,7 @@ std::string Day01::GetResultForStream(const std::filesystem::path& path)
 
 	};
 
-	ForEachLineInFile(path, [&commitEntry, &addEntry](const std::string& line)
+	ForEachLineInFile(path, [&commitEntry, &addEntry](const std::wstring& line)
 		{
 			if (line.empty())
 			{
@@ -50,7 +50,7 @@ std::string Day01::GetResultForStream(const std::filesystem::path& path)
 	// Ensure the final entry is committed.
 	commitEntry();
 
-	std::stringstream resultStr{};
+	std::wstringstream resultStr{};
 	resultStr << currentMax << " calories found in elf " << currentMaxGroup + 1 << "\n";
 
 	{
@@ -67,12 +67,12 @@ std::string Day01::GetResultForStream(const std::filesystem::path& path)
 
 	return resultStr.str();
 }
-std::string Day01::GetIdStr()
+std::wstring Day01::GetIdStr()
 {
-	return "Day01";
+	return L"Day01";
 }
-std::string Day01::GetResultStr()
+std::wstring Day01::GetResultStr()
 {
-	std::cout << GetResultForStream(GetTestInputPath());
+	std::wcout << GetResultForStream(GetTestInputPath());
 	return GetResultForStream(GetInputPath());
 };

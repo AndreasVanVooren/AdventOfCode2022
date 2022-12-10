@@ -12,40 +12,46 @@ std::filesystem::path BaseDay::GetWorkingFolder()
 
 std::filesystem::path BaseDay::GetInputPath()
 {
-	return GetWorkingFolder() / "input";
+	return GetWorkingFolder() / L"input";
 }
 
 std::filesystem::path BaseDay::GetTestInputPath(int numSuffix /*= -1*/)
 {
-	const std::string fileName 
+	const std::wstring fileName 
 		= (numSuffix >= 0)
-		? ("input_test_" + std::to_string(numSuffix))
-		: "input_test";
+		? (L"input_test_" + std::to_wstring(numSuffix))
+		: L"input_test";
 	return GetWorkingFolder() / fileName;
 }
 
-void BaseDay::ForEachLineInFile(std::ifstream& file, const std::function<void(const std::string&)>& func)
+void BaseDay::ForEachLineInFile(std::wifstream& file, const std::function<void(const std::wstring&)>& func)
 {
-	std::string line;
+	std::wstring line;
 	while (std::getline(file, line))
 	{
 		func(line);
 	}
 }
 
-void BaseDay::ForEachLineInFile(const std::filesystem::path& path, const std::function<void(const std::string&)>& func)
+void BaseDay::ForEachLineInFile(const std::filesystem::path& path, const std::function<void(const std::wstring&)>& func)
 {
-	ScopeProfiler prof{ "Iter file " + path.string() };
-	std::ifstream fileStream{ path };
+	if (!std::filesystem::exists(path))
+	{
+		// What the heck do you think you're doing!!!
+		__debugbreak();
+		return;
+	}
+	ScopeProfiler prof{ L"Iter file " + path.wstring() };
+	std::wifstream fileStream{ path };
 	ForEachLineInFile(fileStream, func);
 }
 
-void BaseDay::ForEachLineInInputFile(const std::function<void(const std::string&)>& func)
+void BaseDay::ForEachLineInInputFile(const std::function<void(const std::wstring&)>& func)
 {
 	ForEachLineInFile(GetInputPath(), func);
 }
 
-void BaseDay::ForEachLineInTestInputFile(const std::function<void(const std::string&)>& func, int numSuffix /*= -1*/)
+void BaseDay::ForEachLineInTestInputFile(const std::function<void(const std::wstring&)>& func, int numSuffix /*= -1*/)
 {
 	ForEachLineInFile(GetTestInputPath(numSuffix), func);
 }

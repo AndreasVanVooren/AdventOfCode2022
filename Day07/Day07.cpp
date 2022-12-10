@@ -13,8 +13,8 @@
 struct FakeDir
 {
 	FakeDir* parent = nullptr;
-	std::map<std::string, FakeDir> subDirs{};
-	std::map<std::string, int> files{};
+	std::map<std::wstring, FakeDir> subDirs{};
+	std::map<std::wstring, int> files{};
 	int accumulatedSize = 0;
 };
 
@@ -45,9 +45,9 @@ struct SmallestRemovableDirFinder
 	}
 };
 
-std::string Day07::GetResultStr()
+std::wstring Day07::GetResultStr()
 {
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 	FakeDir* currentDir = nullptr;
 	FakeDir root{};
 	const auto reset = [&]
@@ -55,54 +55,54 @@ std::string Day07::GetResultStr()
 		currentDir = nullptr;
 		root = {};
 	};
-	const auto processCmd = [&](const std::string& cmd, const std::string& args)
+	const auto processCmd = [&](const std::wstring& cmd, const std::wstring& args)
 	{
-		if (cmd == "cd")
+		if (cmd == L"cd")
 		{
-			if (args == "/")
+			if (args == L"/")
 			{
-				//std::cout << "Navigating to root\n";
+				//std::wcout << "Navigating to root\n";
 				currentDir = &root;
 			}
-			else if (args == "..")
+			else if (args == L"..")
 			{
 				currentDir = currentDir->parent;
-				//std::cout << "Navigating to parent dir\n";
+				//std::wcout << "Navigating to parent dir\n";
 			}
 			else
 			{
 				if (currentDir->subDirs.contains(args))
 				{
-					//std::cout << "Navigating to " << args << "\n";
+					//std::wcout << "Navigating to " << args << "\n";
 					currentDir = &currentDir->subDirs[args];
 				}
 			}
 		}
 	};
-	const auto processLambda = [&](const std::string& line)
+	const auto processLambda = [&](const std::wstring& line)
 	{
-		if (line.starts_with("$ "))
+		if (line.starts_with(L"$ "))
 		{
-			const auto [cmd, args] = SplitString(line.substr(2), " ");
+			const auto [cmd, args] = SplitString(line.substr(2), L" ");
 			processCmd(cmd, args);
 		}
-		else if (line.starts_with("dir "))
+		else if (line.starts_with(L"dir "))
 		{
-			const std::string substr = line.substr(4);
+			const std::wstring substr = line.substr(4);
 			if (!currentDir->subDirs.contains(substr))
 			{
-				//std::cout << "Found new dir " << substr << "\n";
+				//std::wcout << "Found new dir " << substr << "\n";
 				currentDir->subDirs.emplace(substr, FakeDir{currentDir});
 			}
 		}
 		else if(!line.empty())
 		{
-			const auto [sizeStr, fileName] = SplitString(line, " ");
+			const auto [sizeStr, fileName] = SplitString(line, L" ");
 			if (!currentDir->files.contains(fileName))
 			{
 				int size = std::stoi(sizeStr);
 				currentDir->files.emplace(fileName, size);
-				//std::cout << "Found new file " << fileName << " with size " << size << "\n";
+				//std::wcout << "Found new file " << fileName << " with size " << size << "\n";
 				auto* fileDir = currentDir;
 				while (fileDir != nullptr)
 				{
@@ -113,17 +113,17 @@ std::string Day07::GetResultStr()
 		}
 	};
 	
-	const auto processTree = [&](const std::string& debug)
+	const auto processTree = [&](const std::wstring& debug)
 	{
 		{
-			ScopeProfiler prof{ "DirSizeAccumulator" };
+			ScopeProfiler prof{ L"DirSizeAccumulator" };
 
 			const int size = DirSizeAccumulator{}(root);
-			//std::cout << "Total size of smaller files for [" << debug << "] = " << size << "\n";
-			resultStream << "Total size of smaller files for [" << debug << "] = " << size << "\n";
+			//std::wcout << L"Total size of smaller files for [" << debug << L"] = " << size << L"\n";
+			resultStream << L"Total size of smaller files for [" << debug << L"] = " << size << L"\n";
 		}
 		{
-			ScopeProfiler prof{ "SmallestRemovableDirFinder" };
+			ScopeProfiler prof{ L"SmallestRemovableDirFinder" };
 			constexpr int maxSize = 70'000'000;
 			constexpr int updateSize = 30'000'000;
 			const int diskSize = root.accumulatedSize;
@@ -132,23 +132,23 @@ std::string Day07::GetResultStr()
 			if (requiredSize > 0)
 			{
 				int result = SmallestRemovableDirFinder{ requiredSize }(root);
-				//std::cout << "Smallest removable size for [" << debug << "] = " << result << "\n";
-				resultStream << "Smallest removable size for [" << debug << "] = " << result << "\n";
+				//std::wcout << L"Smallest removable size for [" << debug << L"] = " << result << L"\n";
+				resultStream << L"Smallest removable size for [" << debug << L"] = " << result << L"\n";
 			}
 		}
 	};
 
 	reset();
 	ForEachLineInTestInputFile(processLambda);
-	processTree("test");
+	processTree(L"test");
 
 	reset();
 	ForEachLineInInputFile(processLambda);
-	processTree("final");
+	processTree(L"final");
 
 	return resultStream.str();
 };
-std::string Day07::GetIdStr()
+std::wstring Day07::GetIdStr()
 {
-	return "Day07";
+	return L"Day07";
 };

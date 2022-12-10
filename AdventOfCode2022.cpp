@@ -10,14 +10,14 @@
 
 int main()
 {
-    std::cout << "Currently in " << std::filesystem::current_path() << "\n\n";
+	std::wcout << L"Currently in " << std::filesystem::current_path() << L"\n\n";
 
 	// Check if files don't exist, otherwise create them.
 	for (int i = 0; i < 25; i++)
 	{
 		std::filesystem::path hPath = std::filesystem::current_path();
-		std::stringstream pathStream{};
-		pathStream << "Day" << std::setfill('0') << std::setw(2) << i + 1;
+		std::wstringstream pathStream{};
+		pathStream << "Day" << std::setfill(L'0') << std::setw(2) << i + 1;
 		hPath /= pathStream.str();
 		hPath /= pathStream.str();
 		std::filesystem::path cppPath = hPath;
@@ -27,30 +27,30 @@ int main()
 		if (!std::filesystem::exists(hPath))
 		{
 			std::filesystem::create_directories(hPath.parent_path());
-			std::ofstream headerStream{hPath};
-			headerStream << "#pragma once\n";
-			headerStream << "#include \"../BaseDay.h\"\n";
-			headerStream << "class " << pathStream.str() << " : public BaseDay\n";
-			headerStream << "{\n";
-			headerStream << "public:\n";
-			headerStream << "\tvirtual std::string GetResultStr();\n";
-			headerStream << "\tvirtual std::string GetIdStr();\n";
-			headerStream << "};\n";
+			std::wofstream headerStream{hPath};
+			headerStream << L"#pragma once\n";
+			headerStream << L"#include \"../BaseDay.h\"\n";
+			headerStream << L"class " << pathStream.str() << L" : public BaseDay\n";
+			headerStream << L"{\n";
+			headerStream << L"public:\n";
+			headerStream << L"\tvirtual std::wstring GetResultStr();\n";
+			headerStream << L"\tvirtual std::wstring GetIdStr();\n";
+			headerStream << L"};\n";
 		}
 
 		if (!std::filesystem::exists(cppPath))
 		{
 			//std::filesystem::create_directories(cppPath.parent_path());
-			std::ofstream cppStream{ cppPath };
-			cppStream << "#include \"" << pathStream.str() << ".h\"\n";
-			cppStream << "std::string " << pathStream.str() << "::GetResultStr()\n";
-			cppStream << "{\n";
-			cppStream << "\treturn \"---"<< pathStream.str() <<" is not yet implemented! ---\\n\";\n";
-			cppStream << "};\n";
-			cppStream << "std::string " << pathStream.str() << "::GetIdStr()\n";
-			cppStream << "{\n";
-			cppStream << "\treturn \"" << pathStream.str() << "\";\n";
-			cppStream << "};\n";
+			std::wofstream cppStream{ cppPath };
+			cppStream << L"#include \"" << pathStream.str() << L".h\"\n";
+			cppStream << L"std::wstring " << pathStream.str() << L"::GetResultStr()\n";
+			cppStream << L"{\n";
+			cppStream << L"\treturn L\"---"<< pathStream.str() << L" is not yet implemented! ---\\n\";\n";
+			cppStream << L"};\n";
+			cppStream << L"std::wstring " << pathStream.str() << L"::GetIdStr()\n";
+			cppStream << L"{\n";
+			cppStream << L"\treturn L\"" << pathStream.str() << L"\";\n";
+			cppStream << L"};\n";
 		}
 	}
 	IterateDays();

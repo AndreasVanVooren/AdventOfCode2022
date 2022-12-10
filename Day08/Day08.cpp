@@ -10,9 +10,9 @@
 #include "../Utils.h"
 #include "../ScopeProfiler.h"
 
-std::string Day08::GetResultStr()
+std::wstring Day08::GetResultStr()
 {
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 
 	std::vector<std::vector<int>> treeGrid{};
 
@@ -21,15 +21,15 @@ std::string Day08::GetResultStr()
 		treeGrid = {};
 	};
 
-	const auto fetchTreeRow = [&](const std::string& line)
+	const auto fetchTreeRow = [&](const std::wstring& line)
 	{
 		if (line.empty()) return;
 		std::vector<int> temp{};
 		for (const auto& c : line)
 		{
-			if (c >= '0' && c <= '9')
+			if (c >= L'0' && c <= L'9')
 			{
-				temp.push_back(c - '0');
+				temp.push_back(c - L'0');
 			}
 		}
 		treeGrid.push_back(std::move(temp));
@@ -78,7 +78,7 @@ std::string Day08::GetResultStr()
 
 	const auto getAccumulatedTreeStats = [&]
 	{
-		ScopeProfiler prof{ "getAccumulatedTreeStats" };
+		ScopeProfiler prof{ L"getAccumulatedTreeStats" };
 
 		size_t num = 0;
 		ptrdiff_t highestScenicScore = 0;
@@ -108,7 +108,7 @@ std::string Day08::GetResultStr()
 	ForEachLineInTestInputFile(fetchTreeRow);
 	{
 		const auto [numVisible, highestScenic, row, col] = getAccumulatedTreeStats();
-		resultStream << "Test input returned " << numVisible << " trees visible, with a highest scenic score of " << highestScenic << " at [" << col << "," << row << "]\n";
+		resultStream << L"Test input returned " << numVisible << L" trees visible, with a highest scenic score of " << highestScenic << L" at [" << col << L"," << row << L"]\n";
 		if (numVisible != 21) __debugbreak();
 		if (highestScenic != 8) __debugbreak();
 		if (col != 2) __debugbreak();
@@ -119,12 +119,12 @@ std::string Day08::GetResultStr()
 	ForEachLineInInputFile(fetchTreeRow);
 	{
 		const auto [numVisible, highestScenic, row, col] = getAccumulatedTreeStats();
-		resultStream << "Input returned " << numVisible << " trees visible, with a highest scenic score of " << highestScenic << " at [" << col << "," << row << "]\n";
+		resultStream << L"Input returned " << numVisible << L" trees visible, with a highest scenic score of " << highestScenic << L" at [" << col << L"," << row << L"]\n";
 	}
 
 	return resultStream.str();
 };
-std::string Day08::GetIdStr()
+std::wstring Day08::GetIdStr()
 {
-	return "Day08";
+	return L"Day08";
 };

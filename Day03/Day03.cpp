@@ -6,14 +6,14 @@
 #include <set>
 #include "../Utils.h"
 
-constexpr int ConvertToPriorityValue(char character) { return (character >= 'A' && character <= 'Z') ? (character - 'A' + 27) : ((character >= 'a' && character <= 'z') ? character - 'a' + 1 : 0); }
+constexpr int ConvertToPriorityValue(wchar_t character) { return (character >= L'A' && character <= L'Z') ? (character - L'A' + 27) : ((character >= L'a' && character <= L'z') ? character - L'a' + 1 : 0); }
 
-std::string Day03::GetResultStr()
+std::wstring Day03::GetResultStr()
 {
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 	int mismatchPrioTotal{};
 	int groupPrioTotal{};
-	std::vector<std::string> groupSacks{};
+	std::vector<std::wstring> groupSacks{};
 	constexpr int MAX_SACKS_PER_GROUP = 3;
 	
 	const auto reset = [&]
@@ -22,25 +22,25 @@ std::string Day03::GetResultStr()
 		groupPrioTotal = 0;
 		groupSacks = {};
 	};
-	const auto output = [&](const std::string& debug)
+	const auto output = [&](const std::wstring& debug)
 	{
-		resultStream << std::format("[{}] Mismatched priority total = {} | Group priority total = {}\n", debug, mismatchPrioTotal, groupPrioTotal);
+		resultStream << std::format(L"[{}] Mismatched priority total = {} | Group priority total = {}\n", debug, mismatchPrioTotal, groupPrioTotal);
 	};
 
-	const auto uniques = [](const auto& src) -> std::vector<char>
+	const auto uniques = [](const auto& src) -> std::vector<wchar_t>
 	{
-		std::set<char> intermediate{ src.begin(), src.end() };
+		std::set<wchar_t> intermediate{ src.begin(), src.end() };
 		return { intermediate.begin(), intermediate.end() };
 	};
 
 	const auto commitGroupSacks = [&]
 	{
 		if (groupSacks.size() <= 0) return;
-		std::vector<char> uniqueInGroup = uniques(groupSacks[0]);
-		for (const std::string& str : groupSacks)
+		std::vector<wchar_t> uniqueInGroup = uniques(groupSacks[0]);
+		for (const std::wstring& str : groupSacks)
 		{
-			const std::vector<char> uniqueCopy = uniqueInGroup;
-			const std::vector<char> intermediateVec = uniques(str);
+			const std::vector<wchar_t> uniqueCopy = uniqueInGroup;
+			const std::vector<wchar_t> intermediateVec = uniques(str);
 			uniqueInGroup = {};
 			std::ranges::set_intersection(uniqueCopy, intermediateVec, std::back_inserter(uniqueInGroup));
 		}
@@ -52,12 +52,12 @@ std::string Day03::GetResultStr()
 		groupSacks = {};
 	};
 
-	const auto processLambda = [&](const std::string& line)
+	const auto processLambda = [&](const std::wstring& line)
 	{
 		groupSacks.push_back(line);
 		const auto [lineLhs, lineRhs] = SplitString(line, line.length() / 2);
 		if (lineLhs.length() != lineRhs.length()) __debugbreak();
-		std::set<char> encountered;
+		std::set<wchar_t> encountered;
 		for (size_t i = 0; i < lineLhs.length(); ++i)
 		{
 			if (lineRhs.find(lineLhs[i]) != lineRhs.npos && !encountered.contains(lineLhs[i]))
@@ -68,14 +68,14 @@ std::string Day03::GetResultStr()
 
 	reset();
 	ForEachLineInTestInputFile(processLambda);
-	output("Test");
+	output(L"Test");
 
 	if (mismatchPrioTotal != 157) __debugbreak();
 	if (groupPrioTotal != 70) __debugbreak();
 
 	reset();
 	ForEachLineInInputFile(processLambda);
-	output("Final");
+	output(L"Final");
 
 	// Was too low
 	if (mismatchPrioTotal <= 791) __debugbreak();
@@ -83,7 +83,7 @@ std::string Day03::GetResultStr()
 	return resultStream.str();
 }
 
-std::string Day03::GetIdStr()
+std::wstring Day03::GetIdStr()
 {
-	return "Day03";
+	return L"Day03";
 }

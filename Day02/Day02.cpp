@@ -21,21 +21,21 @@ namespace Day02Internal
 		Win = 6,
 	};
 
-	static const std::map<std::string, RPSValue> OriginalValueMapping
+	static const std::map<std::wstring, RPSValue> OriginalValueMapping
 	{
-		  {"A", RPSValue::Rock}
-		, {"B", RPSValue::Paper}
-		, {"C", RPSValue::Scissors}
-		, {"X", RPSValue::Rock}
-		, {"Y", RPSValue::Paper}
-		, {"Z", RPSValue::Scissors}
+		  {L"A", RPSValue::Rock}
+		, {L"B", RPSValue::Paper}
+		, {L"C", RPSValue::Scissors}
+		, {L"X", RPSValue::Rock}
+		, {L"Y", RPSValue::Paper}
+		, {L"Z", RPSValue::Scissors}
 	};
 
-	static const std::map<std::string, RPSResult> ResultMapping
+	static const std::map<std::wstring, RPSResult> ResultMapping
 	{
-		  {"X", RPSResult::Loss}
-		, {"Y", RPSResult::Draw}
-		, {"Z", RPSResult::Win}
+		  {L"X", RPSResult::Loss}
+		, {L"Y", RPSResult::Draw}
+		, {L"Z", RPSResult::Win}
 	};
 
 	RPSResult GetResultForRHS(RPSValue lhs, RPSValue rhs)
@@ -118,10 +118,10 @@ namespace Day02Internal
 	}
 }
 
-std::string Day02::GetResultStr()
+std::wstring Day02::GetResultStr()
 {
 	using namespace Day02Internal;
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 	std::vector<int> scoresPerTurn{};
 	int scoreTotal{};
 
@@ -131,21 +131,21 @@ std::string Day02::GetResultStr()
 		scoresPerTurn = {};
 	};
 
-	const auto logResult = [&](const std::string& debug = {})
+	const auto logResult = [&](const std::wstring& debug = {})
 	{
 		if (debug.empty())
 		{
-			resultStream << "Total result = " << scoreTotal << "\n";
+			resultStream << L"Total result = " << scoreTotal << L"\n";
 		}
 		else
 		{
-			resultStream << "Total result for " << debug << " = " << scoreTotal << "\n";
+			resultStream << L"Total result for " << debug << L" = " << scoreTotal << L"\n";
 		}
 	};
 
-	const auto lineLambdaAssumingXYZIsValue = [&scoreTotal, &scoresPerTurn](const std::string& line)
+	const auto lineLambdaAssumingXYZIsValue = [&scoreTotal, &scoresPerTurn](const std::wstring& line)
 	{
-		const auto [lhs, rhs] = SplitString(line, " ");
+		const auto [lhs, rhs] = SplitString(line, L" ");
 		// TODO: Ensure the line is valid, for now assume it is.
 		const auto lhsIter = OriginalValueMapping.find(lhs);
 		const auto rhsIter = OriginalValueMapping.find(rhs);
@@ -157,9 +157,9 @@ std::string Day02::GetResultStr()
 			scoresPerTurn.push_back(scoreTurn);
 		}
 	};
-	const auto lineLambdaAssumingXYZIsResult = [&scoreTotal, &scoresPerTurn](const std::string& line)
+	const auto lineLambdaAssumingXYZIsResult = [&scoreTotal, &scoresPerTurn](const std::wstring& line)
 	{
-		const auto [lhs, rhs] = SplitString(line, " ");
+		const auto [lhs, rhs] = SplitString(line, L" ");
 		// TODO: Ensure the line is valid, for now assume it is.
 		const auto lhsIter = OriginalValueMapping.find(lhs);
 		const auto rhsIter = ResultMapping.find(rhs);
@@ -174,7 +174,7 @@ std::string Day02::GetResultStr()
 
 	initValues();
 	ForEachLineInTestInputFile(lineLambdaAssumingXYZIsValue);
-	logResult("XYZ = value");
+	logResult(L"XYZ = value");
 	if (scoreTotal != 15)
 	{
 		// Break, this is unexpected.
@@ -183,11 +183,11 @@ std::string Day02::GetResultStr()
 
 	initValues();
 	ForEachLineInInputFile(lineLambdaAssumingXYZIsValue);
-	logResult("XYZ = value");
+	logResult(L"XYZ = value");
 
 	initValues();
 	ForEachLineInTestInputFile(lineLambdaAssumingXYZIsResult);
-	logResult("XYZ = result");
+	logResult(L"XYZ = result");
 
 	if (scoreTotal != 12)
 	{
@@ -198,13 +198,13 @@ std::string Day02::GetResultStr()
 
 	initValues();
 	ForEachLineInInputFile(lineLambdaAssumingXYZIsResult);
-	logResult("XYZ = result");
+	logResult(L"XYZ = result");
 
 
 	return resultStream.str();
 };
 
-std::string Day02::GetIdStr()
+std::wstring Day02::GetIdStr()
 {
-	return "Day02";
+	return L"Day02";
 }

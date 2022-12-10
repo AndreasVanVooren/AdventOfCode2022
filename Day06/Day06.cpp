@@ -6,11 +6,11 @@
 #include <ranges>
 #include "../Utils.h"
 
-std::string Day06::GetResultStr()
+std::wstring Day06::GetResultStr()
 {
-	std::stringstream resultStream{};
-	std::string debug{};
-	const auto processLambda = [&](const std::string& line)
+	std::wstringstream resultStream{};
+	std::wstring debug{};
+	const auto processLambda = [&](const std::wstring& line)
 	{
 		if (line.empty()) { return; }
 		size_t packetStartIndex = static_cast<size_t>(-1);
@@ -44,16 +44,16 @@ std::string Day06::GetResultStr()
 			}
 		}
 
-		resultStream << "[" << debug << "] Start of packet = " << packetStartIndex << ", Start of msg = " << msgStartIndex << "\n";
+		resultStream << L"[" << debug << L"] Start of packet = " << packetStartIndex << L", Start of msg = " << msgStartIndex << "\n";
 	};
-	debug = "test";
+	debug = L"test";
 	ForEachLineInTestInputFile(processLambda);
-	debug = "realsies";
+	debug = L"realsies";
 	ForEachLineInInputFile(processLambda);
 
 	return resultStream.str();
 };
-std::string Day06::GetIdStr()
+std::wstring Day06::GetIdStr()
 {
-	return "Day06";
+	return L"Day06";
 };

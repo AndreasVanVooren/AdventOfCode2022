@@ -58,7 +58,7 @@ struct ReactToKnotMoveFunctor
 
 		if (newTailPos != oldTailPos)
 		{
-			//std::cout << "Knot " << knotIndex << " moves to [" << newTailPos.first << "," << newTailPos.second << "]\n";
+			//std::wcout << "Knot " << knotIndex << " moves to [" << newTailPos.first << "," << newTailPos.second << "]\n";
 			thisKnot.Location = newTailPos;
 			++thisKnot.Moves;
 
@@ -74,9 +74,9 @@ struct ReactToKnotMoveFunctor
 	}
 };
 
-std::string Day09::GetResultStr()
+std::wstring Day09::GetResultStr()
 {
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 	std::vector<Knot> knotInfos{};
 	const auto reset = [&]
 	{
@@ -84,30 +84,30 @@ std::string Day09::GetResultStr()
 		knotInfos = std::vector<Knot>(KNOT_AMOUNT);
 		knotInfos.back().VisitedLocations = std::vector<coord>{ knotInfos.back().Location };
 	};
-	const auto output = [&](const std::string& debug)
+	const auto output = [&](const std::wstring& debug)
 	{
-		resultStream << "[" << debug << "] Tail visited " << knotInfos.back().VisitedLocations.value().size() << " locations\n";
+		resultStream << L"[" << debug << L"] Tail visited " << knotInfos.back().VisitedLocations.value().size() << L" locations\n";
 	};
-	const auto processOneMove = [&](const char cmd)
+	const auto processOneMove = [&](const wchar_t cmd)
 	{
 		//ScopeProfiler prof{ "moveProcess" };
 		Knot& thisKnot = knotInfos[0];
 		coord newHeadPos = thisKnot.Location;
 		switch (cmd)
 		{
-		case 'L':
+		case L'L':
 			++thisKnot.Moves;
 			--newHeadPos.first;
 			break;
-		case 'R':
+		case L'R':
 			++thisKnot.Moves;
 			++newHeadPos.first;
 			break;
-		case 'D':
+		case L'D':
 			++thisKnot.Moves;
 			--newHeadPos.second;
 			break;
-		case 'U':
+		case L'U':
 			++thisKnot.Moves;
 			++newHeadPos.second;
 			break;
@@ -116,48 +116,48 @@ std::string Day09::GetResultStr()
 		}
 
 		thisKnot.Location = newHeadPos;
-		//std::cout << "Head knot moves to [" << thisKnot.Location.first << "," << thisKnot.Location.second << "]\n";
+		//std::wcout << L"Head knot moves to [" << thisKnot.Location.first << L"," << thisKnot.Location.second << L"]\n";
 		//if (std::ranges::find(thisKnot.VisitedLocations, thisKnot.Location) == thisKnot.VisitedLocations.end())
 		//{
 		//	thisKnot.VisitedLocations.push_back(thisKnot.Location);
 		//}
 		ReactToKnotMoveFunctor{ 1, knotInfos }();
 	};
-	const auto processMove = [&](const char cmd, int amount)
+	const auto processMove = [&](const wchar_t cmd, int amount)
 	{
-		//ScopeProfiler prof{ "bulkMoveProcess" };
+		//ScopeProfiler prof{ L"bulkMoveProcess" };
 		for (int i = 0; i < amount; i++)
 		{
 			processOneMove(cmd);
 		}
 	};
-	const auto processCmdList = [&](const std::string& line)
+	const auto processCmdList = [&](const std::wstring& line)
 	{
 		if (line.empty()) return;
-		const auto [cmd, amountStr] = SplitString(line, " ");
+		const auto [cmd, amountStr] = SplitString(line, L" ");
 		processMove(cmd[0], std::stoi(amountStr));
 	};
 
 	reset();
 	ForEachLineInTestInputFile(processCmdList, 0);
-	output("Test 0");
+	output(L"Test 0");
 	if (knotInfos.back().VisitedLocations.value().size() != 1) __debugbreak();
 
 
 	reset();
 	ForEachLineInTestInputFile(processCmdList, 1);
-	output("Test 1");
+	output(L"Test 1");
 	if (knotInfos.back().VisitedLocations.value().size() != 36) __debugbreak();
 
 	reset();
 	ForEachLineInInputFile(processCmdList);
-	output("Final");
+	output(L"Final");
 	if (knotInfos.back().VisitedLocations.value().size() == 2355) __debugbreak();
 	if (knotInfos.back().VisitedLocations.value().size() == 2596) __debugbreak();
 
 	return resultStream.str();
 };
-std::string Day09::GetIdStr()
+std::wstring Day09::GetIdStr()
 {
-	return "Day09";
+	return L"Day09";
 };

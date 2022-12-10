@@ -93,6 +93,7 @@
       </EnableModules>
       <CompileAs>
       </CompileAs>
+      <ForceConformanceInForLoopScope />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +127,7 @@
       </EnableModules>
       <CompileAs>
       </CompileAs>
+      <ForceConformanceInForLoopScope />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

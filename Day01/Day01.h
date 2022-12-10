@@ -3,7 +3,7 @@
 class Day01 : public BaseDay
 {
 public:
-	virtual std::string GetResultStr();
-	virtual std::string GetIdStr();
-	std::string GetResultForStream(const std::filesystem::path& path);
+	virtual std::wstring GetResultStr();
+	virtual std::wstring GetIdStr();
+	std::wstring GetResultForStream(const std::filesystem::path& path);
 };

@@ -6,16 +6,16 @@
 #include <ranges>
 #include "../Utils.h"
 
-std::string Day05::GetResultStr()
+std::wstring Day05::GetResultStr()
 {
-	std::stringstream resultStream{};
+	std::wstringstream resultStream{};
 	std::vector<std::vector<char>> warehouse{};
 	bool bHasFilledWarehouse = false;
 	bool bIsCrateMover9001 = false;
 
-	const auto stackTop = [&warehouse]() -> std::string
+	const auto stackTop = [&warehouse]() -> std::wstring
 	{
-		std::stringstream stream{};
+		std::wstringstream stream{};
 		for (const auto& stack : warehouse)
 		{
 			if (stack.size() > 0)
@@ -30,11 +30,11 @@ std::string Day05::GetResultStr()
 		warehouse = {};
 		bHasFilledWarehouse = false;
 	};
-	const auto output = [&](const std::string& debug)
+	const auto output = [&](const std::wstring& debug)
 	{
-		resultStream << "Stack top [" << debug <<"]: " << stackTop() << "\n";
+		resultStream << L"Stack top [" << debug <<L"]: " << stackTop() << L"\n";
 	};
-	const auto addLineToWarehouse = [&](const std::string& line)
+	const auto addLineToWarehouse = [&](const std::wstring& line)
 	{
 		if (line.empty())
 		{
@@ -67,11 +67,11 @@ std::string Day05::GetResultStr()
 			}
 		}
 	};
-	const auto processCmd = [&](const std::string& line)
+	const auto processCmd = [&](const std::wstring& line)
 	{
 		if (line.empty()) return;
-		const std::regex regexObj{"move ([0-9]+) from ([0-9]+) to ([0-9]+)"};
-		std::smatch match;
+		const std::wregex regexObj{L"move ([0-9]+) from ([0-9]+) to ([0-9]+)"};
+		std::wsmatch match;
 		if (std::regex_match(line, match, regexObj))
 		{
 			// The first sub_match is the whole string; the next
@@ -95,7 +95,7 @@ std::string Day05::GetResultStr()
 			warehouse[src].resize(warehouse[src].size() - num);
 		}
 	};
-	const auto processLambda = [&](const std::string& line)
+	const auto processLambda = [&](const std::wstring& line)
 	{
 		if (!bHasFilledWarehouse)
 		{
@@ -109,26 +109,26 @@ std::string Day05::GetResultStr()
 
 	reset();
 	ForEachLineInTestInputFile(processLambda);
-	output("Test");
-	if (stackTop() != "CMZ") __debugbreak();
+	output(L"Test");
+	if (stackTop() != L"CMZ") __debugbreak();
 	reset();
 	ForEachLineInInputFile(processLambda);
-	output("Final");
+	output(L"Final");
 
 	bIsCrateMover9001 = true;
 
 	reset();
 	ForEachLineInTestInputFile(processLambda);
-	output("Test9001");
-	if (stackTop() != "MCD") __debugbreak();
+	output(L"Test9001");
+	if (stackTop() != L"MCD") __debugbreak();
 	reset();
 	ForEachLineInInputFile(processLambda);
-	output("Final9001");
+	output(L"Final9001");
 
 
 	return resultStream.str();
 };
-std::string Day05::GetIdStr()
+std::wstring Day05::GetIdStr()
 {
-	return "Day05";
+	return L"Day05";
 };

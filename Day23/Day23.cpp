@@ -1,9 +1,9 @@
 #include "Day23.h"
-std::string Day23::GetResultStr()
+std::wstring Day23::GetResultStr()
 {
-	return "---Day23 is not yet implemented! ---\n";
+	return L"---Day23 is not yet implemented! ---\n";
 };
-std::string Day23::GetIdStr()
+std::wstring Day23::GetIdStr()
 {
-	return "Day23";
+	return L"Day23";
 };

@@ -5,13 +5,13 @@
 #include <map>
 #include <utility>
 
-static constexpr std::pair<std::string, std::string> SplitString(const std::string& src, std::string::size_type offset, std::string::size_type substrLen = 0) { using t = std::pair<std::string, std::string>; return ((offset >= src.length()) ? t{ src, {} } : ((offset <= 0 || ((src.length() - offset) < substrLen)) ? t{ {}, src } : t{ src.substr(0, offset), src.substr(offset + substrLen) })); }
-static constexpr std::pair<std::string, std::string> SplitString(const std::string& src, const std::string& substr) { const auto offset = src.find(substr); return SplitString(src, offset, substr.length()); }
+static constexpr std::pair<std::wstring, std::wstring> SplitString(const std::wstring& src, std::wstring::size_type offset, std::wstring::size_type substrLen = 0) { using t = std::pair<std::wstring, std::wstring>; return ((offset >= src.length()) ? t{ src, {} } : ((offset <= 0 || ((src.length() - offset) < substrLen)) ? t{ {}, src } : t{ src.substr(0, offset), src.substr(offset + substrLen) })); }
+static constexpr std::pair<std::wstring, std::wstring> SplitString(const std::wstring& src, const std::wstring& substr) { const auto offset = src.find(substr); return SplitString(src, offset, substr.length()); }
 
 // NOTE: The compiler succeeds here, but Intellisense fails, so these asserts might be marked as errors, even though they shouldn't be.
-static_assert(SplitString("FooBar", 3) == std::pair<std::string, std::string>{"Foo", "Bar"});
-static_assert(SplitString("FooBar", 9) == std::pair<std::string, std::string>{"FooBar", {}});
-static_assert(SplitString("FooBar", 0) == std::pair<std::string, std::string>{ {}, "FooBar" });
+static_assert(SplitString(L"FooBar", 3) == std::pair<std::wstring, std::wstring>{L"Foo", L"Bar"});
+static_assert(SplitString(L"FooBar", 9) == std::pair<std::wstring, std::wstring>{L"FooBar", {}});
+static_assert(SplitString(L"FooBar", 0) == std::pair<std::wstring, std::wstring>{ {}, L"FooBar" });
 
-static_assert(SplitString("FooBar", "B") == std::pair<std::string, std::string>{"Foo", "ar"});
-static_assert(SplitString("FooBar", "Bar") == std::pair<std::string, std::string>{"Foo", {}});
+static_assert(SplitString(L"FooBar", L"B") == std::pair<std::wstring, std::wstring>{L"Foo", L"ar"});
+static_assert(SplitString(L"FooBar", L"Bar") == std::pair<std::wstring, std::wstring>{L"Foo", {}});

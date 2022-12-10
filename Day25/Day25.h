@@ -3,6 +3,6 @@
 class Day25 : public BaseDay
 {
 public:
-	virtual std::string GetResultStr();
-	virtual std::string GetIdStr();
+	virtual std::wstring GetResultStr();
+	virtual std::wstring GetIdStr();
 };
