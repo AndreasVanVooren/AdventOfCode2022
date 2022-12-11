@@ -184,5 +184,8 @@
     <ClInclude Include="Day13\Day13.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScopeProfiler.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

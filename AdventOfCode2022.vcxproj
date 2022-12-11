@@ -209,6 +209,7 @@
     <ClInclude Include="Day24\Day24.h" />
     <ClInclude Include="Day25\Day25.h" />
     <ClInclude Include="Days.h" />
+    <ClInclude Include="ScopeProfiler.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
