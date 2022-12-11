@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <map>
 #include <regex>
 #include <ranges>
 #include "../Utils.h"
@@ -82,7 +83,7 @@ namespace Day11Internal
 	struct Item
 	{
 		WorryType WorryLevel;
-		std::map<WorryType, ModuloHelper> WorryLevelsPerMonkey{};
+		std::vector<ModuloHelper> WorryLevelsPerMonkey{};
 	};
 
 	struct Monkey
@@ -206,8 +207,9 @@ std::wstring Day11::GetResultStr()
 			ParseResultOp(line.substr(ifCmd.length()), monkeys.back());
 		}
 	};
-	const auto postParse = [&]
+	const auto postParse = [&](const std::wstring& debug)
 	{
+		const ScopeProfiler prof{ L"[" + debug + L"] Post-parse" };
 		std::vector<WorryType> divisors{};
 		for (auto& monkey : monkeys)
 		{
@@ -219,14 +221,14 @@ std::wstring Day11::GetResultStr()
 			{
 				for (const auto& div : divisors)
 				{
-					item.WorryLevelsPerMonkey.emplace(div, ModuloHelper{ item.WorryLevel, div });
+					item.WorryLevelsPerMonkey.push_back(ModuloHelper{ item.WorryLevel, div });
 				}
 			}
 		}
 	};
-	const auto handleItemWithoutRelax = [&](Monkey& monkey, Item& item, int logLevel = 0)
+	const auto handleItemWithoutRelax = [&](Monkey& monkey, Item& item, size_t monkeyIndex, int logLevel = 0)
 	{
-		for (auto& [div, worryLevel] : item.WorryLevelsPerMonkey)
+		for (auto& worryLevel: item.WorryLevelsPerMonkey)
 		{
 			const auto inspectWorry = HandleOp(
 				  worryLevel
@@ -242,7 +244,7 @@ std::wstring Day11::GetResultStr()
 		++monkey.InspectionCounter;
 
 		const auto testOpRhs = monkey.TestOpRhs.value();
-		const bool evalResult = WorryType(item.WorryLevelsPerMonkey.at(testOpRhs)) == 0;
+		const bool evalResult = WorryType(item.WorryLevelsPerMonkey[monkeyIndex]) == 0;
 		if (logLevel >= 3) std::wcout << L"      Current item is" << (evalResult ? L" " : L" not ") << "divisible by " << testOpRhs << "\n";
 
 		const auto newTarget = evalResult ? monkey.TestSuccessTarget : monkey.TestFailureTarget;
@@ -290,7 +292,7 @@ std::wstring Day11::GetResultStr()
 			}
 			else
 			{
-				handleItemWithoutRelax(monkey, item, logLevel);
+				handleItemWithoutRelax(monkey, item, monkeyIndex, logLevel);
 			}
 		}
 		monkey.ItemsInHand.clear();
@@ -348,7 +350,7 @@ std::wstring Day11::GetResultStr()
 
 	reset();
 	ForEachLineInTestInputFile(parseLines);
-	postParse();
+	postParse(L"Test");
 	handle(L"Test (relaxed, 20 rounds)", 20, true);
 	const auto testLevel = output(L"Test (relaxed, 20 rounds)");
 	if (testLevel != 10605) __debugbreak();
@@ -359,12 +361,14 @@ std::wstring Day11::GetResultStr()
 
 	reset();
 	ForEachLineInInputFile(parseLines);
-	postParse();
+	postParse(L"Realsies");
 	handle(L"Realsies", 20, true);
 	const auto realLevel = output(L"Realsies");
+	if (realLevel != 98280) __debugbreak();
 	monkeysWorking = {};
 	handle(L"Realsies (stressed, 10000 rounds)", 10000, false);
 	const auto realLevel2 = output(L"Realsies (stressed, 10000 rounds)");
+	if (realLevel2 != 17673687232) __debugbreak();
 
 	return resultStream.str();
 };
