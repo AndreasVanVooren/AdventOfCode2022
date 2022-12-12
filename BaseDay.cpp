@@ -29,7 +29,25 @@ void BaseDay::ForEachLineInFile(std::wifstream& file, const std::function<void(c
 	std::wstring line;
 	while (std::getline(file, line))
 	{
-		func(line);
+		size_t posRN = line.rfind(L"\r\n");
+		size_t posN = line.rfind(L"\n");
+		size_t posR = line.rfind(L"\r");
+		if (posRN != line.npos)
+		{
+			func(line.substr(0, posRN));
+		}
+		else if (posN != line.npos)
+		{
+			func(line.substr(0, posN));
+		}
+		else if (posR != line.npos)
+		{
+			func(line.substr(0, posR));
+		}
+		else
+		{
+			func(line);
+		}
 	}
 }
 
