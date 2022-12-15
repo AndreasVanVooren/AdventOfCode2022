@@ -10,8 +10,6 @@
 #include "../Utils.h"
 #include "../ScopeProfiler.h"
 
-using coord = std::pair<int, int>;
-
 struct Knot
 {
 	coord Location;

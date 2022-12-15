@@ -16,3 +16,22 @@ static_assert(SplitString(L"FooBar", 0) == std::pair<std::wstring, std::wstring>
 
 static_assert(SplitString(L"FooBar", L"B") == std::pair<std::wstring, std::wstring>{L"Foo", L"ar"});
 static_assert(SplitString(L"FooBar", L"Bar") == std::pair<std::wstring, std::wstring>{L"Foo", {}});
+
+using coordPoint = int64_t;
+using coord = std::pair<coordPoint, coordPoint>;
+inline constexpr coord operator+(const coord& a, const coord& b)
+{
+	return { a.first + b.first, a.second + b.second };
+}
+inline constexpr coord operator-(const coord& a, const coord& b)
+{
+	return { a.first - b.first, a.second - b.second };
+}
+inline constexpr coord operator*(const coord& a, const coord& b)
+{
+	return { a.first * b.first, a.second * b.second };
+}
+inline constexpr coord operator/(const coord& a, const coord& b)
+{
+	return { a.first / b.first, a.second / b.second };
+}

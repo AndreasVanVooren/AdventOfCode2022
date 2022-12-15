@@ -2,7 +2,6 @@
 #include "../Utils.h"
 #include "../ScopeProfiler.h"
 
-using coord = std::pair<int, int>;
 namespace Day14Internal
 {
 	static constexpr coord ORIGIN_POINT{ 500, 0 };
@@ -53,15 +52,15 @@ std::wstring Day14::GetResultStr()
 	{
 		if (c.second < tlCoord.second)
 		{
-			int additionalItems = tlCoord.second - c.second;
-			int horizontalItems = brCoord.first + 1 - tlCoord.first;
+			coordPoint additionalItems = tlCoord.second - c.second;
+			coordPoint horizontalItems = brCoord.first + 1 - tlCoord.first;
 			matGrid.insert(matGrid.begin(), additionalItems, std::vector<Material>(horizontalItems, Material::Air));
 			tlCoord.second = c.second;
 		}
 		if (c.second > brCoord.second)
 		{
-			int additionalItems = c.second - brCoord.second;
-			int horizontalItems = brCoord.first + 1 - tlCoord.first;
+			coordPoint additionalItems = c.second - brCoord.second;
+			coordPoint horizontalItems = brCoord.first + 1 - tlCoord.first;
 			if (bWithFloor)
 			{
 				matGrid.insert(matGrid.end(), additionalItems - 1, std::vector<Material>(horizontalItems, Material::Air));
@@ -76,7 +75,7 @@ std::wstring Day14::GetResultStr()
 
 		if (c.first < tlCoord.first)
 		{
-			int additionalItems = tlCoord.first - c.first;
+			coordPoint additionalItems = tlCoord.first - c.first;
 			for (size_t i = 0; i < matGrid.size(); ++i)
 			{
 				auto& vec = matGrid[i];
@@ -87,7 +86,7 @@ std::wstring Day14::GetResultStr()
 		}
 		if (c.first > brCoord.first)
 		{
-			int additionalItems = c.first - brCoord.first;
+			coordPoint additionalItems = c.first - brCoord.first;
 			for (size_t i = 0; i < matGrid.size(); ++i)
 			{
 				auto& vec = matGrid[i];
@@ -108,7 +107,7 @@ std::wstring Day14::GetResultStr()
 	};
 	const auto isCoordAir = [&](const coord& c)
 	{
-		if (c.second < 0 || c.second >= matGrid.size() || c.first < 0 || c.first >= matGrid[c.second].size())
+		if (c.second < 0 || c.second >= static_cast<coordPoint>(matGrid.size()) || c.first < 0 || c.first >= static_cast<coordPoint>(matGrid[c.second].size()))
 		{
 			return true;
 		}
