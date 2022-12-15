@@ -43,7 +43,7 @@ std::wstring Day10::GetResultStr()
 			+ signalStrengthDuringCycle(179)
 			+ signalStrengthDuringCycle(219);
 	};
-	const auto processOp = [&](const std::wstring& line)
+	const auto processOp = [&](const std::wstring_view& line)
 	{
 		if (line == L"noop")
 		{

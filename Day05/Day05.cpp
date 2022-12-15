@@ -9,7 +9,7 @@
 std::wstring Day05::GetResultStr()
 {
 	std::wstringstream resultStream{};
-	std::vector<std::vector<char>> warehouse{};
+	std::vector<std::vector<wchar_t>> warehouse{};
 	bool bHasFilledWarehouse = false;
 	bool bIsCrateMover9001 = false;
 
@@ -34,7 +34,7 @@ std::wstring Day05::GetResultStr()
 	{
 		resultStream << L"Stack top [" << debug <<L"]: " << stackTop() << L"\n";
 	};
-	const auto addLineToWarehouse = [&](const std::wstring& line)
+	const auto addLineToWarehouse = [&](const std::wstring_view& line)
 	{
 		if (line.empty())
 		{
@@ -67,12 +67,12 @@ std::wstring Day05::GetResultStr()
 			}
 		}
 	};
-	const auto processCmd = [&](const std::wstring& line)
+	const auto processCmd = [&](const std::wstring_view& line)
 	{
 		if (line.empty()) return;
 		const std::wregex regexObj{L"move ([0-9]+) from ([0-9]+) to ([0-9]+)"};
-		std::wsmatch match;
-		if (std::regex_match(line, match, regexObj))
+		std::match_results<std::wstring_view::const_iterator> match;
+		if (std::regex_match(line.cbegin(), line.cend(), match, regexObj))
 		{
 			// The first sub_match is the whole string; the next
 			// sub_match is the first parenthesized expression.
@@ -95,7 +95,7 @@ std::wstring Day05::GetResultStr()
 			warehouse[src].resize(warehouse[src].size() - num);
 		}
 	};
-	const auto processLambda = [&](const std::wstring& line)
+	const auto processLambda = [&](const std::wstring_view& line)
 	{
 		if (!bHasFilledWarehouse)
 		{

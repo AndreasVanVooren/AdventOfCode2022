@@ -21,7 +21,7 @@ std::wstring Day08::GetResultStr()
 		treeGrid = {};
 	};
 
-	const auto fetchTreeRow = [&](const std::wstring& line)
+	const auto fetchTreeRow = [&](const std::wstring_view& line)
 	{
 		if (line.empty()) return;
 		std::vector<int> temp{};

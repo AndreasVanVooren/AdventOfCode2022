@@ -79,7 +79,7 @@ std::wstring Day07::GetResultStr()
 			}
 		}
 	};
-	const auto processLambda = [&](const std::wstring& line)
+	const auto processLambda = [&](const std::wstring_view& line)
 	{
 		if (line.starts_with(L"$ "))
 		{
@@ -88,8 +88,8 @@ std::wstring Day07::GetResultStr()
 		}
 		else if (line.starts_with(L"dir "))
 		{
-			const std::wstring substr = line.substr(4);
-			if (!currentDir->subDirs.contains(substr))
+			const std::wstring_view substr = line.substr(4);
+			if (!currentDir->subDirs.contains(substr.data()))
 			{
 				//std::wcout << "Found new dir " << substr << "\n";
 				currentDir->subDirs.emplace(substr, FakeDir{currentDir});

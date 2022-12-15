@@ -131,7 +131,7 @@ std::wstring Day09::GetResultStr()
 			processOneMove(cmd);
 		}
 	};
-	const auto processCmdList = [&](const std::wstring& line)
+	const auto processCmdList = [&](const std::wstring_view& line)
 	{
 		if (line.empty()) return;
 		const auto [cmd, amountStr] = SplitString(line, L" ");

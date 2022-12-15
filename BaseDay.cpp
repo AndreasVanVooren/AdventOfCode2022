@@ -24,7 +24,7 @@ std::filesystem::path BaseDay::GetTestInputPath(int numSuffix /*= -1*/)
 	return GetWorkingFolder() / fileName;
 }
 
-void BaseDay::ForEachLineInFile(std::wifstream& file, const std::function<void(const std::wstring&)>& func)
+void BaseDay::ForEachLineInFile(std::wifstream& file, const std::function<void(const std::wstring_view&)>& func)
 {
 	std::wstring line;
 	while (std::getline(file, line))
@@ -34,15 +34,15 @@ void BaseDay::ForEachLineInFile(std::wifstream& file, const std::function<void(c
 		size_t posR = line.rfind(L"\r");
 		if (posRN != line.npos)
 		{
-			func(line.substr(0, posRN));
+			func(std::wstring_view{ line.c_str(), posRN });
 		}
 		else if (posN != line.npos)
 		{
-			func(line.substr(0, posN));
+			func(std::wstring_view{ line.c_str(), posN });
 		}
 		else if (posR != line.npos)
 		{
-			func(line.substr(0, posR));
+			func(std::wstring_view{ line.c_str(), posR });
 		}
 		else
 		{
@@ -51,7 +51,7 @@ void BaseDay::ForEachLineInFile(std::wifstream& file, const std::function<void(c
 	}
 }
 
-void BaseDay::ForEachLineInFile(const std::filesystem::path& path, const std::function<void(const std::wstring&)>& func)
+void BaseDay::ForEachLineInFile(const std::filesystem::path& path, const std::function<void(const std::wstring_view&)>& func)
 {
 	if (!std::filesystem::exists(path))
 	{
@@ -64,12 +64,12 @@ void BaseDay::ForEachLineInFile(const std::filesystem::path& path, const std::fu
 	ForEachLineInFile(fileStream, func);
 }
 
-void BaseDay::ForEachLineInInputFile(const std::function<void(const std::wstring&)>& func)
+void BaseDay::ForEachLineInInputFile(const std::function<void(const std::wstring_view&)>& func)
 {
 	ForEachLineInFile(GetInputPath(), func);
 }
 
-void BaseDay::ForEachLineInTestInputFile(const std::function<void(const std::wstring&)>& func, int numSuffix /*= -1*/)
+void BaseDay::ForEachLineInTestInputFile(const std::function<void(const std::wstring_view&)>& func, int numSuffix /*= -1*/)
 {
 	ForEachLineInFile(GetTestInputPath(numSuffix), func);
 }

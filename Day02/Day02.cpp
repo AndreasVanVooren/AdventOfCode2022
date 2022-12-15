@@ -143,7 +143,7 @@ std::wstring Day02::GetResultStr()
 		}
 	};
 
-	const auto lineLambdaAssumingXYZIsValue = [&scoreTotal, &scoresPerTurn](const std::wstring& line)
+	const auto lineLambdaAssumingXYZIsValue = [&scoreTotal, &scoresPerTurn](const std::wstring_view& line)
 	{
 		const auto [lhs, rhs] = SplitString(line, L" ");
 		// TODO: Ensure the line is valid, for now assume it is.
@@ -157,7 +157,7 @@ std::wstring Day02::GetResultStr()
 			scoresPerTurn.push_back(scoreTurn);
 		}
 	};
-	const auto lineLambdaAssumingXYZIsResult = [&scoreTotal, &scoresPerTurn](const std::wstring& line)
+	const auto lineLambdaAssumingXYZIsResult = [&scoreTotal, &scoresPerTurn](const std::wstring_view& line)
 	{
 		const auto [lhs, rhs] = SplitString(line, L" ");
 		// TODO: Ensure the line is valid, for now assume it is.

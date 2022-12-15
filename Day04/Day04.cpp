@@ -21,7 +21,7 @@ std::wstring Day04::GetResultStr()
 	{
 		resultStream << std::format(L"[{}] Found {} overlapping groups, where {} fully overlap\n", debug, overlapTotal, overlapFullyTotal);
 	};
-	const auto processLambda = [&](const std::wstring& line)
+	const auto processLambda = [&](const std::wstring_view& line)
 	{
 		if (line.empty()) return;
 		const auto [pairL, pairR] = SplitString(line, L",");

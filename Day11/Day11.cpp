@@ -102,7 +102,7 @@ namespace Day11Internal
 		size_t InspectionCounter{};
 	};
 
-	void ParseStartingItems(const std::wstring& substr, Monkey& target)
+	void ParseStartingItems(const std::wstring_view& substr, Monkey& target)
 	{
 		auto sidePair = SplitString(substr, L", ");
 		do
@@ -112,11 +112,11 @@ namespace Day11Internal
 		} while (!sidePair.first.empty());
 	}
 
-	void ParseInspectOp(const std::wstring& substr, Monkey& target)
+	void ParseInspectOp(const std::wstring_view& substr, Monkey& target)
 	{
 		const std::wregex regexObj{ L"new = ([a-z0-9]+) ([\\+\\-\\*\\/]) ([a-z0-9]+)" };
-		std::wsmatch match;
-		if (std::regex_match(substr, match, regexObj))
+		std::match_results<std::wstring_view::const_iterator> match;
+		if (std::regex_match(substr.cbegin(), substr.cend(), match, regexObj))
 		{
 			if (match[1].str() != L"old")
 			{
@@ -139,7 +139,7 @@ namespace Day11Internal
 		}
 	}
 
-	void ParseTestOp(const std::wstring& substr, Monkey& target)
+	void ParseTestOp(const std::wstring_view& substr, Monkey& target)
 	{
 		// For the time being, assume the substr = "divisible by "
 		static constexpr const std::wstring_view divStr{ L"divisible by " };
@@ -149,7 +149,7 @@ namespace Day11Internal
 		}
 	}
 
-	void ParseResultOp(const std::wstring& substr, Monkey& target)
+	void ParseResultOp(const std::wstring_view& substr, Monkey& target)
 	{
 		static constexpr const std::wstring_view trueStr{ L"true: " };
 		static constexpr const std::wstring_view falseStr{ L"false: " };
@@ -178,7 +178,7 @@ std::wstring Day11::GetResultStr()
 		monkeysWorking = {};
 	};
 
-	const auto parseLines = [&](const std::wstring& line)
+	const auto parseLines = [&](const std::wstring_view& line)
 	{
 		static constexpr const std::wstring_view monkeyCmd{ L"Monkey" };
 		static constexpr const std::wstring_view startItemCmd{ L"  Starting items: " };

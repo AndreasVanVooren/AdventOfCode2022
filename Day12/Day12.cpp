@@ -27,7 +27,7 @@ std::wstring Day12::GetResultStr()
 		nodes = {};
 		columns = {};
 	};
-	const auto processLines = [&](const std::wstring& line)
+	const auto processLines = [&](const std::wstring_view& line)
 	{
 		for (size_t i = 0; i < line.length(); i++)
 		{

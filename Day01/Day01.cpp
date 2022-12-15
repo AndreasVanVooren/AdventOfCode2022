@@ -16,7 +16,7 @@ std::wstring Day01::GetResultForStream(const std::filesystem::path& path)
 	int currentVal = 0;
 	int currentGroup = 0;
 
-	const auto addEntry = [&currentVal](const std::wstring& strVal)
+	const auto addEntry = [&currentVal](const std::wstring_view& strVal)
 	{
 		currentVal += std::stoi(strVal);
 	};
@@ -35,7 +35,7 @@ std::wstring Day01::GetResultForStream(const std::filesystem::path& path)
 
 	};
 
-	ForEachLineInFile(path, [&commitEntry, &addEntry](const std::wstring& line)
+	ForEachLineInFile(path, [&commitEntry, &addEntry](const std::wstring_view& line)
 		{
 			if (line.empty())
 			{

@@ -160,7 +160,7 @@ std::wstring Day14::GetResultStr()
 		abyssPoint = { abyssPoint.first - tlCoord.first, abyssPoint.second - tlCoord.second };
 	};
 
-	const auto parseLine = [&](const std::wstring & line)
+	const auto parseLine = [&](const std::wstring_view& line)
 	{
 		std::vector<coord> path;
 		

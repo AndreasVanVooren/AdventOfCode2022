@@ -52,9 +52,9 @@ std::wstring Day03::GetResultStr()
 		groupSacks = {};
 	};
 
-	const auto processLambda = [&](const std::wstring& line)
+	const auto processLambda = [&](const std::wstring_view& line)
 	{
-		groupSacks.push_back(line);
+		groupSacks.push_back(std::wstring{ line });
 		const auto [lineLhs, lineRhs] = SplitString(line, line.length() / 2);
 		if (lineLhs.length() != lineRhs.length()) __debugbreak();
 		std::set<wchar_t> encountered;

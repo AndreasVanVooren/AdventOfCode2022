@@ -67,7 +67,7 @@ std::wstring Day13::GetResultStr()
 		currentIndex = {};
 	};
 
-	const auto parsePacket = [](const std::wstring& line) -> Item
+	const auto parsePacket = [](const std::wstring_view& line) -> Item
 	{
 		if (line.empty()) return Item{};
 
@@ -130,7 +130,7 @@ std::wstring Day13::GetResultStr()
 		}
 		return result;
 	};
-	const auto processLambda = [&](const std::wstring& line)
+	const auto processLambda = [&](const std::wstring_view& line)
 	{
 		if (line.empty())
 		{

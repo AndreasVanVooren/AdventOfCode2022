@@ -10,7 +10,7 @@ std::wstring Day06::GetResultStr()
 {
 	std::wstringstream resultStream{};
 	std::wstring debug{};
-	const auto processLambda = [&](const std::wstring& line)
+	const auto processLambda = [&](const std::wstring_view& line)
 	{
 		if (line.empty()) { return; }
 		size_t packetStartIndex = static_cast<size_t>(-1);

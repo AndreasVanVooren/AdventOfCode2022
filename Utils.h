@@ -5,8 +5,9 @@
 #include <map>
 #include <utility>
 
-static constexpr std::pair<std::wstring, std::wstring> SplitString(const std::wstring& src, std::wstring::size_type offset, std::wstring::size_type substrLen = 0) { using t = std::pair<std::wstring, std::wstring>; return ((offset >= src.length()) ? t{ src, {} } : ((offset <= 0 || ((src.length() - offset) < substrLen)) ? t{ {}, src } : t{ src.substr(0, offset), src.substr(offset + substrLen) })); }
-static constexpr std::pair<std::wstring, std::wstring> SplitString(const std::wstring& src, const std::wstring& substr) { const auto offset = src.find(substr); return SplitString(src, offset, substr.length()); }
+static constexpr std::pair<std::wstring, std::wstring> SplitString(const std::wstring_view& src, std::wstring::size_type offset, std::wstring::size_type substrLen = 0)
+{ using t = std::pair<std::wstring, std::wstring>; return ((offset >= src.length()) ? t{ src, std::wstring{} } : ((offset <= 0 || ((src.length() - offset) < substrLen)) ? t{ std::wstring{}, src } : t{ src.substr(0, offset), src.substr(offset + substrLen) })); }
+static constexpr std::pair<std::wstring, std::wstring> SplitString(const std::wstring_view& src, const std::wstring_view& substr) { const auto offset = src.find(substr); return SplitString(src, offset, substr.length()); }
 
 // NOTE: The compiler succeeds here, but Intellisense fails, so these asserts might be marked as errors, even though they shouldn't be.
 static_assert(SplitString(L"FooBar", 3) == std::pair<std::wstring, std::wstring>{L"Foo", L"Bar"});
