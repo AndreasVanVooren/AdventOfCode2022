@@ -1,5 +1,6 @@
 #pragma once
 
+#include <regex>
 #include <string>
 #include <string_view>
 #include <functional>
@@ -8,6 +9,8 @@
 
 namespace std
 {
+	using wsvmatch = match_results<wstring_view::const_iterator>;
+
 	inline int stoi(const std::wstring_view& view, size_t* idx = nullptr, int base = 10)
 	{
 		if (idx)

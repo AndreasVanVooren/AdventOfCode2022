@@ -71,7 +71,7 @@ std::wstring Day05::GetResultStr()
 	{
 		if (line.empty()) return;
 		const std::wregex regexObj{L"move ([0-9]+) from ([0-9]+) to ([0-9]+)"};
-		std::match_results<std::wstring_view::const_iterator> match;
+		std::wsvmatch match;
 		if (std::regex_match(line.cbegin(), line.cend(), match, regexObj))
 		{
 			// The first sub_match is the whole string; the next

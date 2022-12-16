@@ -52,7 +52,7 @@ std::wstring Day15::GetResultStr()
 	const auto parseLine = [&](const std::wstring_view& line)
 	{
 		const std::wregex regexObj{ L"Sensor at x=(-?[0-9]+), y=(-?[0-9]+): closest beacon is at x=(-?[0-9]+), y=(-?[0-9]+)" };
-		std::match_results<std::wstring_view::const_iterator> match;
+		std::wsvmatch match;
 		if (std::regex_match(line.cbegin(), line.cend(), match, regexObj))
 		{
 			// The first sub_match is the whole string; the next
