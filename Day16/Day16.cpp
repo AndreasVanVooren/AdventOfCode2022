@@ -381,7 +381,7 @@ std::wstring Day16::GetResultStr()
 
 	//return resultStream.str();
 
-	return L"The truth is out there..."
+	return L"The truth is out there...";
 };
 std::wstring Day16::GetIdStr()
 {
