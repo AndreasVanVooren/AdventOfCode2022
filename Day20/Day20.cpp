@@ -110,9 +110,9 @@ wstring Day20::GetResultStr()
 	reset();
 	ForEachLineInInputFile(parseLine);
 	sum = getGroveCoordinateSum();
-	sum2 = getGroveCoordinateSum(811589153, 10);
+	//sum2 = getGroveCoordinateSum(811589153, 10);
 	if (sum != 5904) __debugbreak();
-	if (sum2 <= 4355798984151) __debugbreak();
+	//if (sum2 <= 4355798984151) __debugbreak();
 	output(sum, sum2, L"Final");
 
 	return resultStream.str();
