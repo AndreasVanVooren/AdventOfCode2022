@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <ranges>
-#include <format>
 #include <set>
 #include "../Utils.h"
 
@@ -19,7 +18,7 @@ std::wstring Day04::GetResultStr()
 	};
 	const auto output = [&](const std::wstring& debug)
 	{
-		resultStream << std::format(L"[{}] Found {} overlapping groups, where {} fully overlap\n", debug, overlapTotal, overlapFullyTotal);
+		resultStream << L"["<<debug<<"] Found " << overlapTotal << " overlapping groups, where "<<overlapFullyTotal<<" fully overlap\n";
 	};
 	const auto processLambda = [&](const std::wstring_view& line)
 	{

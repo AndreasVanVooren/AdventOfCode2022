@@ -1,6 +1,7 @@
 #include "Day13.h"
 #include <numeric>
 #include <variant>
+#include <optional>
 #include "../ScopeProfiler.h"
 
 namespace Day13Internal

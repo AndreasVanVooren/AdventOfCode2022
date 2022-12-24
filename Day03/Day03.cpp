@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <vector>
 #include <ranges>
-#include <format>
 #include <set>
 #include "../Utils.h"
 
@@ -24,7 +23,7 @@ std::wstring Day03::GetResultStr()
 	};
 	const auto output = [&](const std::wstring& debug)
 	{
-		resultStream << std::format(L"[{}] Mismatched priority total = {} | Group priority total = {}\n", debug, mismatchPrioTotal, groupPrioTotal);
+		resultStream << L"[" << debug << L"] Mismatched priority total = " << mismatchPrioTotal << " | Group priority total = " << groupPrioTotal << "\n";
 	};
 
 	const auto uniques = [](const auto& src) -> std::vector<wchar_t>

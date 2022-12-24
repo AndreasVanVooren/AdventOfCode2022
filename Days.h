@@ -31,6 +31,8 @@
 
 static void IterateDays()
 {
+	std::wcout << L"Iterating days\n";
+
 	{
 		ScopeProfiler prof{ L"Day01" };
 		std::wcout << Day01{}.GetResultStr();
@@ -146,11 +148,11 @@ static void IterateDays()
 		std::wcout << Day22{}.GetResultStr();
 	}
 	std::wcout << L"\n";
-	{
-		ScopeProfiler prof{ L"Day23" };
-		std::wcout << Day23{}.GetResultStr();
-	}
-	std::wcout << L"\n";
+	//{
+	//	ScopeProfiler prof{ L"Day23" };
+	//	std::wcout << Day23{}.GetResultStr();
+	//}
+	//std::wcout << L"\n";
 	{
 		ScopeProfiler prof{ L"Day24" };
 		std::wcout << Day24{}.GetResultStr();

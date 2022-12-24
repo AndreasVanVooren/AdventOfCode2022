@@ -1,11 +1,18 @@
 #pragma once
 
+#include <algorithm>
 #include <regex>
 #include <string>
 #include <string_view>
 #include <functional>
 #include <fstream>
 #include <filesystem>
+#include <limits>
+
+#ifdef __GNUC__
+#include <csignal>
+#define __debugbreak() std::raise(SIGINT)
+#endif
 
 namespace std
 {
@@ -94,19 +101,19 @@ namespace std
 
 			if (bIsNegative)
 			{
-				if (INT_MIN / base > result)
+				if (std::numeric_limits<int>::min() / base > result)
 				{
 					errno = ERANGE;
-					result = INT_MIN;
+					result = std::numeric_limits<int>::min();
 					break;
 				}
 
 				result *= base;
 
-				if (INT_MIN + adder > result)
+				if (std::numeric_limits<int>::min() + adder > result)
 				{
 					errno = ERANGE;
-					result = INT_MIN;
+					result = std::numeric_limits<int>::min();
 					break;
 				}
 
@@ -114,19 +121,19 @@ namespace std
 			}
 			else
 			{
-				if (INT_MAX / base < result)
+				if (std::numeric_limits<int>::max() / base < result)
 				{
 					errno = ERANGE;
-					result = INT_MAX;
+					result = std::numeric_limits<int>::max();
 					break;
 				}
 
 				result *= base;
 
-				if (INT_MAX - adder < result)
+				if (std::numeric_limits<int>::max() - adder < result)
 				{
 					errno = ERANGE;
-					result = INT_MAX;
+					result = std::numeric_limits<int>::max();
 					break;
 				}
 
