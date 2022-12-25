@@ -11,39 +11,44 @@ namespace Day25Internals
 {
 	wstring IntToSnafuV1(size_t theInt)
 	{
-		wstringstream resultStream{};
-		// The INT to SNAFU conversion is a bit scuffed
-		while(theInt > 0)
+		if(theInt == 0)
 		{
-			int64_t intCopy = static_cast<int64_t>(theInt);
-			int64_t theMultiplier = 1;
-			for (; ((intCopy - (theMultiplier / 5)) / theMultiplier) > 2; theMultiplier *= 5)
-			{
-			}
+			return L"0";
+		}
 
-			switch (((intCopy - (theMultiplier / 5)) / theMultiplier)) {
-				case 0:
-					resultStream << L"0";
-					break;
-				case 1:
-					resultStream << L"1";
-					break;
-				case 2:
-					resultStream << L"2";
-					break;
-				case -1:
-					resultStream << L"-";
-					break;
-				case -2:
-					resultStream << L"=";
-					break;
+		wstringstream resultStream{};
+
+		int64_t workingInt = static_cast<int64_t>(theInt);
+		int64_t lastMultiplier = 0;
+		while(workingInt != 0)
+		{
+			int64_t baseMultiplier = 1;
+			for (; abs(workingInt) > ((baseMultiplier*2) + (baseMultiplier / 2)); baseMultiplier*=5) {
 			}
-			theInt -= intCopy * theMultiplier;
-			if(theMultiplier > 1 && intCopy == 0)
+			if(lastMultiplier != 0)
 			{
-				for (size_t i = 1; i < theMultiplier; ++i) {
+				for (size_t i = baseMultiplier; i < lastMultiplier/5; i*=5) {
 					resultStream << L'0';
 				}
+			}
+			int64_t resultUnit
+				= workingInt > 0
+				? ((workingInt + (baseMultiplier / 2)) / baseMultiplier)
+				: ((workingInt - (baseMultiplier / 2)) / baseMultiplier);
+			switch (resultUnit) {
+			case -2: resultStream << L'='; break;
+			case -1: resultStream << L'-'; break;
+			case +0: resultStream << L'0'; break;
+			case +1: resultStream << L'1'; break;
+			case +2: resultStream << L'2'; break;
+			}
+			workingInt -= resultUnit * baseMultiplier;
+			lastMultiplier = baseMultiplier;
+		}
+		if(lastMultiplier > 1)
+		{
+			for (size_t i = 1; i < lastMultiplier; i*=5) {
+				resultStream << L'0';
 			}
 		}
 
